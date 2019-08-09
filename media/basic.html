@@ -1,0 +1,29 @@
+<button class="open-button" onclick="openChat()">Chat</button>
+    <div class="chat-popup form-container" id="myForm">
+        <div id="header">
+            <h1>Chat</h1>
+        </div>
+        <div class="container" id="feedback">
+            <form>
+                <label for="fname">First Name</label>
+                <input type="text" id="fname" name="firstname" placeholder="First Name">
+                <br>
+                <label for="lname">Last Name</label>
+                <input type="text" id="lname" name="lastname" placeholder="Last Name">
+                <br>
+                <label for="subject">Feedback</label>
+                <textarea id="subject" name="subject" placeholder="Write something.."></textarea>
+                <input type="submit" onclick="FormSubmit()" value="Submit">
+            </form>
+        </div>
+        <div class="chatflow" id="chatflow">
+            <ul id="messages">
+            </ul>
+            <div class="responses" id="responses-div">
+                <ul id="response-list">
+                </ul>
+            </div>
+            <div>
+            <button type="button" class="btn cancel" onclick="closeChat()">Close</button>
+        </div>
+    </div>

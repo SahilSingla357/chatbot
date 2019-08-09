@@ -1,0 +1,8 @@
+pyDjango==1.11.8
+djangorestframework==3.8.2
+django-filter==1.0.4
+django-cors-headers==2.1.0x
+cssmin==0.2.0
+htmlmin==0.1.12
+jsmin==2.2.2
+

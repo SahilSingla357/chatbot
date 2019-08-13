@@ -9,6 +9,7 @@ import htmlmin
 from cssmin import cssmin
 
 def generate_script(pk):
+    
     path_to_js = settings.MEDIA_ROOT + "/script.html"
     path_to_html = settings.MEDIA_ROOT + "/basic.html"
     path_to_css = settings.MEDIA_ROOT + "/style.css"

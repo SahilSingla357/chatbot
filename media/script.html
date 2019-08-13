@@ -5,7 +5,7 @@ var HTMLTEXT = 'HTML_CODE';//something here
 var CSSTEXT = 'CSS_CODE';
 //based on ui 
 //may not be required
-var bootstrap = '<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">'+'</'+'script>'+'<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js">'+'</'+'script>';
+var bootstrap = '<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">'+'</'+'script>'+'<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js">'+'</'+'script><link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">';
 // may required to be passed 
 var siteDomain = "http://localhost:8000/";
     
@@ -155,7 +155,6 @@ var siteDomain = "http://localhost:8000/";
 
         var questionNextId = resp.dataset.questionNext;
         //Deleting the response-list and creating a new one which has no elements
-        debugger;
         var responseList = document.getElementById("response-list");
         responseList.parentNode.removeChild(responseList);
 
@@ -200,14 +199,20 @@ var siteDomain = "http://localhost:8000/";
         var response = fetch(siteDomain + "api/user/feedback/",{
         method: 'POST',
         headers: {'Content-Type': 'application/json;charset=utf-8'},
-        body: JSON.stringify(input)
-        });
+        body: JSON.stringify(input)});
         localStorage.removeItem("last_Question");
+        document.getElementById("feedback").style.display = "none";
+        successMessage();
+    }
+
+    function successMessage(){
+        var x = document.getElementById("success-message");
+  x.className = "show";
+  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
     }
 
     function saveChat(){
         //saving the chat into localStoarge 
-        debugger;
         var chatHistory=[];
         var chat = document.getElementById("messages");
         chat = chat.getElementsByTagName("li");

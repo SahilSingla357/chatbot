@@ -2,17 +2,18 @@
   box-sizing: border-box;}
 
 /* Button used to open the chat form - fixed at the bottom of the page */
-.open-button {
-  background-color: #555;
+.open {
+  background-color: #008CBA;
   color: white;
-  padding: 16px 20px;
+  padding: 10px 10px;
   border: none;
   cursor: pointer;
   opacity: 0.8;
   position: fixed;
   bottom: 23px;
   right: 28px;
-  width: 280px;
+  width: 120px;
+  border-radius: 10px;
 }
 
 /* The popup chat - hidden by default */
@@ -33,19 +34,24 @@
 }
 
 .form-container .btn {
-  background-color: #4CAF50;
+  background-color: #008CBA;
   color: white;
-  padding: 16px 20px;
+  padding: 12px 20px;
   border: none;
   cursor: pointer;
-  width: 100%;
+  width: 20px;
   margin-bottom:10px;
   opacity: 0.8;
 }
 
 /* Add a red background color to the cancel button */
-.form-container .cancel {
-  background-color: red;
+.cancel {
+  background-color: #008CBA;
+  border-radius: 50%;
+  width: 10px;
+  margin-bottom:10px;
+  opacity: 0.8;
+  padding: 16px 20px;
 }
 
 /* Add some hover effects to buttons */
@@ -59,4 +65,46 @@
 
 .container {
   display: none;
+}
+
+#success-message {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+  font-size: 17px;
+}
+
+#success-message.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;} 
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;} 
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
 }

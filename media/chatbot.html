@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -15,13 +15,15 @@
 <body>
 <div class="chat-bot">
 <div id="success-message"> Thanks for your feedback. We will contact you at our earliest convenience</div>
-<button type="button" class="btn open" onclick="openChat()"><i class='fas fa-comment-alt'></i> &nbsp Lets Chat</button>
-    <div class="chat-popup form-container" id="myForm">
-        <div id="header">
-            <h1>Chat</h1>
-        </div>
+<button type="button" class="btn-chat" onclick="openChat()"><i class="icon-comment-dots" title="Open Chat"></i></button>
+    <main class="chat-popup form-container" id="myForm">
+        <header class="chat-header" id="header">
+            <h1 class="chat-header__heading"><i class="icon-shiney mr-10"></i> Shiney</h1>
+            <button class="chat-header__refresh" id="refresh-button" onclick="refresh()" title="Refresh Chat">
+            <button title="Close Chat" type="button" class="chat-header__close" onclick="closeChat()"></button>
+        </header>
         <div class="container" id="feedback">
-            <form>
+            <!-- <form>
                 <label for="fname">First Name</label>
                 <input type="text" id="fname" name="firstname" placeholder="First Name">
                 <br>
@@ -31,7 +33,7 @@
                 <label for="subject">Feedback</label>
                 <textarea id="subject" name="subject" placeholder="Write something.."></textarea>
                 <input type="submit" onclick="FormSubmit()" value="Submit">
-            </form>
+            </form> -->
         </div>
         <div class="chatflow" id="chatflow">
             <ul id="messages">
@@ -41,8 +43,8 @@
                 </ul>
             </div>
         </div>
-            <button type="button" class="btn cancel" onclick="closeChat()">Close</button>
-    </div>
+            
+    </main>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -19,6 +19,7 @@ class Question(AdminAction, models.Model):
         help_text="Designates if the question is the first question in the decision tree")
     category = models.PositiveIntegerField(
         default=1, choices=RESPONSE_TYPE_CHOICES , help_text=('type of response to be stored'))
+    next_default_question = models.ForeignKey("self", blank=True, null=True)
     is_active = models.BooleanField(
         default=False, help_text='Designates whether a question is active or not')
 

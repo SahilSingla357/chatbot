@@ -1,57 +1,230 @@
-.chat-bot {font-family: Arial, Helvetica, sans-serif;
-  box-sizing: border-box;}
+:root {
+  --gradient-col1: #07c0e6;
+  --gradient-col2: #0b59e0;
+  --white: #fff;
+  --black: #333;
+  --blue: #2f5da5;
+  --chatbgcol: #f1f6fa;
+  --gradient1: linear-gradient(to bottom, var(--gradient-col1), var(--gradient-col2));
+  --gradient2: linear-gradient(to right bottom, var(--gradient-col1), var(--gradient-col2));
+}
+
+*{
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; /* 1rem = 10px, 10px/16px = 62.5%*/
+}
+
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+button:focus,
+button:active {
+  outline:0;
+}
+
+.mr-10 {
+  margin-right: 10px;
+}
+
+.icon-comment-dots {
+  background: url(sprite.png) no-repeat 0 0;
+  width: 2.3rem;
+  height: 1.9rem;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.icon-shiney {
+  background: url(sprite.png) no-repeat 0 -2.1rem;
+  width: 3.4rem;
+  height: 3.9rem;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.icon-shiney-sm {
+  background: url(sprite.png) no-repeat -4rem -2.1rem;
+  width: 2.4rem;
+  height: 2.6rem;
+  display: inline-block;
+}
 
 /* Button used to open the chat form - fixed at the bottom of the page */
-.open {
-  background-color: #008CBA;
-  color: white;
-  padding: 10px 10px;
-  border: none;
-  cursor: pointer;
-  opacity: 0.8;
+.btn-chat {
+  background-image: var(--gradient1);
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
   position: fixed;
-  bottom: 23px;
-  right: 28px;
-  width: 120px;
-  border-radius: 10px;
+  bottom: 2.3rem;
+  right: 2.8rem;
+  cursor: pointer;
+  border: none;
+  color: var(--white);
+  box-shadow: 0 1rem 2rem rgba(0,0,0, .4);
 }
 
 /* The popup chat - hidden by default */
 .chat-popup {
   display: none;
   position: fixed;
-  bottom: 0;
-  right: 15px;
-  border: 3px solid #f1f1f1;
+  bottom: 9rem;
+  right: 2rem;
+  background: var(--chatbgcol);
   z-index: 9;
+  border-radius: 1rem;
+  width: 32rem;
 }
 
-/* Add styles to the form container */
-.form-container {
-  width: 300px;
-  padding: 10px;
-  background-color: white;
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-image: var(--gradient2);
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  padding: 1.6rem 1rem;
 }
 
-.form-container .btn {
-  background-color: #008CBA;
-  color: white;
-  padding: 12px 20px;
+.chat-header__heading {
+  font-size: 1.8rem;
+  color: var(--white);
+  margin: 0 0 0 .5rem;
+}
+
+.chat-header__close {
   border: none;
-  cursor: pointer;
-  width: 20px;
-  margin-bottom:10px;
-  opacity: 0.8;
+  background: url(sprite.png) no-repeat -3.1rem 0;
+  width: 1.6rem;
+  height: 1.6rem;
+  display: inline-block;
+  margin-right: 1rem;
+  margin-left: 2rem;
 }
+
+.chat-header__refresh {
+  border: none;
+  background: url(sprite.png) no-repeat -5.7rem 0;
+  width: 2.2rem;
+  height: 1.8rem;
+  display: inline-block;
+  margin-left: auto;
+}
+
+.chatflow {
+  font-size: 1.3rem;
+  color: var(--black);
+  font-weight: 600;
+  overflow: auto;
+  max-height: 30rem;
+}
+
+#messages {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  list-style-type: none;
+  margin-top: 2rem;
+}
+
+#messages .question-asked{
+  margin: 0 3rem 1rem 5rem;
+  padding: 1.5rem;
+  background: var(--white);
+  border-radius: 1.5rem;
+  border-top-left-radius: 0;
+  position: relative;
+}
+
+#messages .question-asked::before {
+  content: "";
+  position: absolute;
+  left: -3.6rem;
+  top: 1rem;
+  display: inline-block;
+  background: url(sprite.png) no-repeat -40px -21px;
+  width: 24px;
+  height: 26px;
+}
+
+#messages .user-response {
+  list-style-type: none;
+  display: inline-block;
+  background-image: var(--gradient2);
+  color: var(--white);
+  border-radius: 1.5rem;
+  border-bottom-right-radius: 0;
+  padding: 1.5rem;
+  margin: 0 2rem 1rem 0;
+  align-self: flex-end;
+}
+
+#messages .response-comment{
+  margin: 0 3rem 1rem 5rem;
+  padding: 1.5rem;
+  background: var(--white);
+  border-radius: 1.5rem;
+  border-top-left-radius: 0;
+  position: relative;
+}
+
+.chatflow .responses ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 0 3rem 1rem 5rem;
+  flex-direction: column;
+}
+
+.chatflow .responses li {
+  list-style-type: none;
+  display: block;
+  background: var(--white);
+  color: var(--blue);
+  border: 1px solid var(--blue);
+  border-radius: 2rem;
+  padding: .6rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+
 
 /* Add a red background color to the cancel button */
-.cancel {
+
+
+/*-------- old css -------*/
+
+/*.chat-bot {font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;}*/
+
+
+
+
+
+
+
+.btn {
   background-color: #008CBA;
-  border-radius: 50%;
-  width: 10px;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  /*width: 20px;*/
   margin-bottom:10px;
   opacity: 0.8;
-  padding: 16px 20px;
 }
 
 /* Add some hover effects to buttons */

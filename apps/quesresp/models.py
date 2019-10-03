@@ -1,6 +1,8 @@
 from django.db import models
 from apps.vendor.models import Vendor
 
+from .config import RESPONSE_TYPE_CHOICES
+
 
 class AdminAction():
     pub_date = models.DateTimeField('date published')
@@ -13,7 +15,10 @@ class Question(AdminAction, models.Model):
     vendor = models.ForeignKey(Vendor, blank=True, null=True)
     question_text = models.TextField()
     is_first_question = models.BooleanField(
-        default=False, help_text="Designates if the question is the first question in the decision tree")
+        default=False, 
+        help_text="Designates if the question is the first question in the decision tree")
+    category = models.PositiveIntegerField(
+        default=1, choices=RESPONSE_TYPE_CHOICES , help_text=('type of response to be stored'))
     is_active = models.BooleanField(
         default=False, help_text='Designates whether a question is active or not')
 
@@ -23,12 +28,13 @@ class Question(AdminAction, models.Model):
     #note this carefully
     @property
     def response_data(self):
-        return self.quesresprelation_set.values('question_next', response_text=models.F('response__response_text'))
+        return self.quesresprelation_set.values('question_next', response_text=models.F('response__response_text'),comment=models.F('response__comment'))
 
 
 class Response(AdminAction, models.Model):
     vendor = models.ForeignKey(Vendor, blank=True, null=True)
     response_text = models.TextField()
+    comment = models.TextField(default='', help_text ='used to show comment per response if available' )
     is_active = models.BooleanField(
         default=False, help_text='Designates whether a resposne is active or not')
 

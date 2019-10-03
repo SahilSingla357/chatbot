@@ -9,7 +9,7 @@ class QuestionSerializer(ModelSerializer):
 
     class Meta:
         model = Question
-        fields = ('id', 'vendor', 'question_text',
+        fields = ('id', 'vendor', 'question_text', 'category',
                   'is_first_question', 'is_active', 'response_data')
 
 
@@ -17,7 +17,7 @@ class ResponseSerializer(ModelSerializer):
 
     class Meta:
         model = Response
-        fields = ('id', 'vendor', 'response_text', 'is_active')
+        fields = ('id', 'vendor', 'response_text','comment','is_active')
 
 
 class QuesRespRelSerializer(ModelSerializer):

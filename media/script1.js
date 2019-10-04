@@ -1,9 +1,9 @@
-var vendor = "15";
+var vendor = "2";
 
 var bootstrap = '<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">'+'</'+'script>'+'<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js">'+'</'+'script><link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">';
 // may required to be passed 
-var response_html = '<li id="feedback-response" style="display: none"><button id="submit-button" name="submit-button" onclick="submitFunction()">Submit</button></li>';
-var siteDomain = "http://localhost:8000/";
+var response_html = '<li id="feedback-response-list" class="feedback-response-list" style="display: none"><button id="submit-button" name="submit-button" onclick="submitFunction()">Submit</button></li>';
+var siteDomain = "http://localhost:9000/";
     
     var head = document.getElementsByTagName("head")[0].innerHTML;
     document.getElementsByTagName("head")[0].innerHTML += bootstrap;
@@ -12,6 +12,14 @@ var siteDomain = "http://localhost:8000/";
     var chatBotDiv = document.getElementsByClassName("chat-bot")[0];
 
     //adding the question asked into the chat
+
+    function endMessage(message){
+        var finalMessage = document.createElement("LI");
+        finalMessage.setAttribute("class", "messages final-message");
+        finalMessage.appendChild(document.createTextNode(message));
+        document.getElementById("messages").appendChild(finalMessage);
+    }
+
     function questionAsked(questionText) {
         var quesMessage = document.createElement("LI");
         quesMessage.setAttribute("class", "messages question-asked");
@@ -21,42 +29,58 @@ var siteDomain = "http://localhost:8000/";
 
     //adding all the possible options from that question
     function responseOptions(res, category) {
-        debugger;
         var questionNext = res.question_next;
         var responseText = res.response_text;
         if(category == 2){
 
-            document.getElementById("feedback-response").style.display = "block";
+            document.getElementById("feedback-response-list").style.display = "block";
 
+            var divElement = document.createElement("div");
+            divElement.setAttribute("class","input-body");
             var feedbackResponse = document.createElement("input");
             feedbackResponse.setAttribute("type", "checkbox");
             feedbackResponse.setAttribute("class", "feedback-response");
             feedbackResponse.setAttribute("value", res.response_text);
+            feedbackResponse.setAttribute("id", res.response_text);
+            divElement.appendChild(feedbackResponse);
             // feedbackResponse.setAttribute("data-question-next", questionNext);
             // feedbackResponse.appendChild(document.createTextNode(responseText));
-            document.getElementById("feedback-response").insertBefore(feedbackResponse,document.getElementById("feedback-response").childNodes[0]);
             // feedbackResponse.insertAdjacentText("beforeend", res.response_text);
             // document.createElement('br').insertAfter(feedbackResponse)
-            feedbackResponse.parentNode.insertBefore(document.createElement('br'),feedbackResponse.nextSibling)
-            feedbackResponse.parentNode.insertBefore(document.createTextNode(responseText),feedbackResponse.nextSibling)
-
+            var labelElement = document.createElement("label");
+            labelElement.setAttribute("for",res.response_text);
+            labelElement.appendChild(document.createElement("span"));
+            labelElement.appendChild(document.createTextNode(responseText));
+            // spanInputElement.parentNode.insertBefore(spanElement,spanInputElement.nextSibling);
+            divElement.appendChild(labelElement);
+            document.getElementById("feedback-response-list").insertBefore(divElement,document.getElementById("feedback-response-list").childNodes[0]);
         }else if(category == 3){
 
-            document.getElementById("feedback-response").style.display = "block";
+            document.getElementById("feedback-response-list").style.display = "block";
 
+            var divElement = document.createElement("div");
+            divElement.setAttribute("class","input-body");
             var feedbackResponse = document.createElement("input");
             feedbackResponse.setAttribute("type", "radio");
             feedbackResponse.setAttribute("class", "feedback-response");
             feedbackResponse.setAttribute("value", res.response_text);
             feedbackResponse.setAttribute("name", "feedback");
+            feedbackResponse.setAttribute("id", res.response_text);
+            divElement.appendChild(feedbackResponse);
             // feedbackResponse.setAttribute("data-question-next", questionNext);
             // feedbackResponse.appendChild(document.createTextNode(responseText));
             // feedbackResponse.innerHTML = '"'+responseText+'"';
-            document.getElementById("feedback-response").insertBefore(feedbackResponse, document.getElementById("feedback-response").childNodes[0]);
+            
             // feedbackResponse.insertAdjacentText("beforeend", res.response_text);
             // document.createElement('br').insertAfter(feedbackResponse)
-            feedbackResponse.parentNode.insertBefore(document.createElement('br'),feedbackResponse.nextSibling)
-            feedbackResponse.parentNode.insertBefore(document.createTextNode(responseText),feedbackResponse.nextSibling)
+            var labelElement = document.createElement("label");
+            labelElement.setAttribute("for",res.response_text);
+            labelElement.appendChild(document.createElement("span"));
+            labelElement.appendChild(document.createTextNode(responseText));
+            // feedbackResponse.parentNode.insertBefore(document.createElement('br'),feedbackResponse.nextSibling)
+            // feedbackResponse.parentNode.insertBefore(document.createTextNode(responseText),feedbackResponse.nextSibling)
+            divElement.appendChild(labelElement);
+            document.getElementById("feedback-response-list").insertBefore(divElement, document.getElementById("feedback-response-list").childNodes[0]);
 
         }else{
 
@@ -100,10 +124,8 @@ var siteDomain = "http://localhost:8000/";
                 questionAsked(response.question_text);
                 localStorage.setItem("last_Question",response.id);
                     for (res of response.response_data){
-                        debugger;
                         responseOptions(res, response.category);
                     }
-                debugger;
                 if(response.next_default_question_id){
                     var submitButton = document.getElementById("submit-button");
                     submitButton.setAttribute("value",response.next_default_question_id);
@@ -138,7 +160,6 @@ var siteDomain = "http://localhost:8000/";
             .then(function(response) {
                 //accessing first element only, to check for mistakenly more than 1, first questions.
                 response = response[0]; 
-                debugger;
 
                 //Adding the question asked to the chat
                 questionAsked(response.question_text);
@@ -148,7 +169,6 @@ var siteDomain = "http://localhost:8000/";
 
                 //Adding all responses to the response-list
                 for (res of response.response_data){
-                    debugger;
                     responseOptions(res, response.category);
                 }
             });
@@ -256,9 +276,10 @@ var siteDomain = "http://localhost:8000/";
         clearResponses();
 
         if(submitButton.value){
-            debugger;
             apiCall(parseInt(submitButton.value));
+            return;
         }
+        endMessage("thanks for the feedback");
         
     }
 

@@ -22,15 +22,17 @@
             <button class="chat-header__refresh" id="refresh-button" onclick="refresh()" title="Refresh Chat">
             <button title="Close Chat" type="button" class="chat-header__close" onclick="closeChat()"></button>
         </header>
-        <div class="chatflow" id="chatflow">
-            <ul id="messages">
-            </ul>
-            <div class="responses" id="responses-div">
-                <ul id="response-list">
-                    <li id="feedback-response" style="display: none">
-                        <button id="submit-button" name="submit-button" onclick="submitFunction()">Submit</button>
-                    </li>
+        <div class="chat-body">
+            <div class="chatflow" id="chatflow">
+                <ul id="messages">
                 </ul>
+                <div class="responses" id="responses-div">
+                    <ul id="response-list">
+                        <li id="feedback-response-list" class="feedback-response-list" style="display: none">
+                            <button id="submit-button" name="submit-button" onclick="submitFunction()">Submit</button>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
             

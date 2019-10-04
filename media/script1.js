@@ -1,15 +1,15 @@
-var vendor = "2";
+var vendor = "15";
 
 var bootstrap = '<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">'+'</'+'script>'+'<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js">'+'</'+'script><link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">';
 // may required to be passed 
 var response_html = '<li id="feedback-response-list" class="feedback-response-list" style="display: none"><button id="submit-button" name="submit-button" onclick="submitFunction()">Submit</button></li>';
-var siteDomain = "http://localhost:9000/";
+var siteDomain = "http://localhost:8000/";
     
-    var head = document.getElementsByTagName("head")[0].innerHTML;
-    document.getElementsByTagName("head")[0].innerHTML += bootstrap;
+var head = document.getElementsByTagName("head")[0].innerHTML;
+document.getElementsByTagName("head")[0].innerHTML += bootstrap;
 
-    var html = document.getElementsByClassName("chat-bot")[0].innerHTML;
-    var chatBotDiv = document.getElementsByClassName("chat-bot")[0];
+var html = document.getElementsByClassName("chat-bot")[0].innerHTML;
+var chatBotDiv = document.getElementsByClassName("chat-bot")[0];
 
     //adding the question asked into the chat
 
@@ -96,6 +96,14 @@ var siteDomain = "http://localhost:9000/";
         }
     }
     //adding the selected response to the chat
+
+    function responseComment(resComment){
+        var responseComment = document.createElement("LI");
+        responseComment.setAttribute("class", "messages response-comment");
+        responseComment.appendChild(document.createTextNode(resComment));
+        document.getElementById("messages").appendChild(responseComment);
+    }
+
     function responseMessage(respMessage, resComment){
         var responseElement = document.createElement("LI");
         responseElement.setAttribute("class", "messages user-response");
@@ -103,10 +111,7 @@ var siteDomain = "http://localhost:9000/";
         document.getElementById("messages").appendChild(responseElement);
 
         if(resComment != ""){
-            var responseComment = document.createElement("LI");
-            responseComment.setAttribute("class", "messages response-comment");
-            responseComment.appendChild(document.createTextNode(resComment));
-            document.getElementById("messages").appendChild(responseComment);
+            responseComment(resComment);
         }
     }
 
@@ -142,19 +147,22 @@ var siteDomain = "http://localhost:9000/";
         //if page has not been left
         if(document.getElementById("messages").childNodes[1]){return;}
         //if page is loaded
-        else if(localStorage.getItem("last_Question")){
-
-            var chatHistory = localStorage.getItem("chatHistory")
-            chatHistory = JSON.parse(chatHistory)
+        else if(localStorage.getItem("chatHistory")){
+            var chatHistory = localStorage.getItem("chatHistory");
+            chatHistory = JSON.parse(chatHistory);
             for (var count = 0; count < chatHistory.length ; count++){
                 questionAsked(chatHistory[count].question);
-                responseMessage(chatHistory[count].response, chatHistory[count].comment);
+                debugger;
+                if(chatHistory[count].response){
+                responseMessage(chatHistory[count].response, chatHistory[count].comment);}
             }
-
+            if(localStorage.getItem("last_Question")){
             var questionId = parseInt(localStorage.getItem("last_Question"));
             apiCall(questionId);
+            }
             return;
         }
+        questionAsked("Hi! I am Shiney...your personal Digital assistant!");
         fetch(siteDomain + "api/vendor/" + vendor + "/questions/?ifq=true")
             .then(res => res.json())
             .then(function(response) {
@@ -206,14 +214,11 @@ var siteDomain = "http://localhost:9000/";
         document.getElementById("myForm").style.display = "none";
     }
 
-    function successMessage(){
-        var x = document.getElementById("success-message");
-        x.className = "show";
-        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
-    }
-
     function saveChat() {
         //saving the chat into localStoarge 
+        if(!document.getElementById("messages").childNodes[1]){
+            return;
+        }
         var chatHistory=[];
         var chat = document.getElementById("messages");
         chat = chat.getElementsByTagName("li");
@@ -232,13 +237,10 @@ var siteDomain = "http://localhost:9000/";
                     question = chat[i].innerHTML;
             }else if(value.includes("user-response")){
                 if(response != ""){
-                    response +="<br>"
+                    response +=","
                 }
                 response +=chat[i].innerHTML
             }else if(value.includes("response-comment")){
-                if(comment != ""){
-                    comment +="<br>"
-                }
                 comment +=chat[i].innerHTML
             }
             if(i == chat.length-1 && !(value.includes("question-asked"))){
@@ -266,7 +268,7 @@ var siteDomain = "http://localhost:9000/";
         for(var i=0;i<feedbackResponse.length; i=i+1){
             if(feedbackResponse[i].checked){
                 if(message!=""){
-                    message +="<br>";
+                    message +=",";
                 }
                 message +=feedbackResponse[i].value;
             }
@@ -279,8 +281,9 @@ var siteDomain = "http://localhost:9000/";
             apiCall(parseInt(submitButton.value));
             return;
         }
+        localStorage.removeItem("last_Question");
+        saveChat();
         endMessage("thanks for the feedback");
-        
     }
 
     window.addEventListener("unload", function() {

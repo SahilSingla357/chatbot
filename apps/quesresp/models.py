@@ -35,7 +35,7 @@ class Question(AdminAction, models.Model):
 class Response(AdminAction, models.Model):
     vendor = models.ForeignKey(Vendor, blank=True, null=True)
     response_text = models.TextField()
-    comment = models.TextField(default='', help_text ='used to show comment per response if available' )
+    comment = models.TextField(blank=True, null=True, help_text ='used to show comment per response if available' )
     is_active = models.BooleanField(
         default=False, help_text='Designates whether a resposne is active or not')
 

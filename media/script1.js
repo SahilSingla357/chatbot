@@ -2,11 +2,14 @@ var vendor = "15";
 
 var bootstrap = '<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">'+'</'+'script>'+'<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js">'+'</'+'script><link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">';
 // may required to be passed 
-var response_html = '<li id="feedback-response" style="display: none"><form id="feedback-form"><input type="submit" name="submit"></form></li>';
+var response_html = '<li id="feedback-response" style="display: none"><button id="submit-button" name="submit-button" onclick="submitFunction()">Submit</button></li>';
 var siteDomain = "http://localhost:8000/";
     
     var head = document.getElementsByTagName("head")[0].innerHTML;
     document.getElementsByTagName("head")[0].innerHTML += bootstrap;
+
+    var html = document.getElementsByClassName("chat-bot")[0].innerHTML;
+    var chatBotDiv = document.getElementsByClassName("chat-bot")[0];
 
     //adding the question asked into the chat
     function questionAsked(questionText) {
@@ -31,7 +34,7 @@ var siteDomain = "http://localhost:8000/";
             feedbackResponse.setAttribute("value", res.response_text);
             // feedbackResponse.setAttribute("data-question-next", questionNext);
             // feedbackResponse.appendChild(document.createTextNode(responseText));
-            document.getElementById("feedback-form").insertBefore(feedbackResponse,document.getElementById("feedback-form").childNodes[0]);
+            document.getElementById("feedback-response").insertBefore(feedbackResponse,document.getElementById("feedback-response").childNodes[0]);
             // feedbackResponse.insertAdjacentText("beforeend", res.response_text);
             // document.createElement('br').insertAfter(feedbackResponse)
             feedbackResponse.parentNode.insertBefore(document.createElement('br'),feedbackResponse.nextSibling)
@@ -45,10 +48,11 @@ var siteDomain = "http://localhost:8000/";
             feedbackResponse.setAttribute("type", "radio");
             feedbackResponse.setAttribute("class", "feedback-response");
             feedbackResponse.setAttribute("value", res.response_text);
+            feedbackResponse.setAttribute("name", "feedback");
             // feedbackResponse.setAttribute("data-question-next", questionNext);
             // feedbackResponse.appendChild(document.createTextNode(responseText));
             // feedbackResponse.innerHTML = '"'+responseText+'"';
-            document.getElementById("feedback-form").insertBefore(feedbackResponse, document.getElementById("feedback-form").childNodes[0]);
+            document.getElementById("feedback-response").insertBefore(feedbackResponse, document.getElementById("feedback-response").childNodes[0]);
             // feedbackResponse.insertAdjacentText("beforeend", res.response_text);
             // document.createElement('br').insertAfter(feedbackResponse)
             feedbackResponse.parentNode.insertBefore(document.createElement('br'),feedbackResponse.nextSibling)
@@ -89,6 +93,24 @@ var siteDomain = "http://localhost:8000/";
         responseList.innerHTML += response_html;
     }
 
+    function apiCall(questionId){
+        fetch(siteDomain + "api/vendor/" + vendor + "/question/" + questionId)
+            .then(res => res.json())
+            .then(function(response){
+                questionAsked(response.question_text);
+                localStorage.setItem("last_Question",response.id);
+                    for (res of response.response_data){
+                        debugger;
+                        responseOptions(res, response.category);
+                    }
+                debugger;
+                if(response.next_default_question_id){
+                    var submitButton = document.getElementById("submit-button");
+                    submitButton.setAttribute("value",response.next_default_question_id);
+                }
+            });
+    }
+
     function openChat(){
         if(document.getElementById("myForm").style.display == "block"){
             document.getElementById("myForm").style.display = "none";
@@ -108,15 +130,7 @@ var siteDomain = "http://localhost:8000/";
             }
 
             var questionId = parseInt(localStorage.getItem("last_Question"));
-            fetch(siteDomain + "api/vendor/" + vendor + "/question/" + questionId)
-            .then(res => res.json())
-            .then(function(response){
-                questionAsked(response.question_text);
-                    for (res of response.response_data){
-                        debugger;
-                        responseOptions(res, response.category);
-                    }
-            });
+            apiCall(questionId);
             return;
         }
         fetch(siteDomain + "api/vendor/" + vendor + "/questions/?ifq=true")
@@ -164,27 +178,8 @@ var siteDomain = "http://localhost:8000/";
         localStorage.removeItem("last_Question");
         localStorage.setItem("last_Question",parseInt(questionNextId,10));
 
-        fetch(siteDomain + "api/vendor/" + vendor + "/question/" + questionNextId)
-            .then(res => res.json())
-            .then(function(response) {
-                debugger;
-                //Adding the recieved question_text from the api hit
-                questionAsked(response.question_text);
+        apiCall(questionNextId);
 
-                //Adding all responses to the response-list
-                if(response.is_feedback_question){
-                    debugger;
-                    document.getElementById('feedback-form').style.display="block";
-                   for (res of response.response_data){
-                    feedbackOptions(res,response.has_multiple_responses);
-                    }
-                }
-                else{
-                    for (res of response.response_data){
-                    responseOptions(res, response.category);
-                    }
-                }
-            });
     }
 
     function closeChat() {
@@ -217,12 +212,12 @@ var siteDomain = "http://localhost:8000/";
                     question = chat[i].innerHTML;
             }else if(value.includes("user-response")){
                 if(response != ""){
-                    response +=";"
+                    response +="<br>"
                 }
                 response +=chat[i].innerHTML
             }else if(value.includes("response-comment")){
                 if(comment != ""){
-                    comment +=";"
+                    comment +="<br>"
                 }
                 comment +=chat[i].innerHTML
             }
@@ -234,15 +229,40 @@ var siteDomain = "http://localhost:8000/";
         localStorage.setItem("chatHistory",chatHistory);
     }
 
-    window.addEventListener("unload", function() {
-        saveChat();
-    });
-
     function refresh(){
         closeChat();
         chatBotDiv.innerHTML = html;
 
         localStorage.removeItem("chatHistory");
         localStorage.removeItem("last_Question");
+
+    }
+
+    function submitFunction(){
+        var feedbackResponse = document.getElementsByClassName("feedback-response");
+        var submitButton = document.getElementById("submit-button");
+
+        var message = "";
+        for(var i=0;i<feedbackResponse.length; i=i+1){
+            if(feedbackResponse[i].checked){
+                if(message!=""){
+                    message +="<br>";
+                }
+                message +=feedbackResponse[i].value;
+            }
+        }
+        if(message!=""){responseMessage(message, "");}
+
+        clearResponses();
+
+        if(submitButton.value){
+            debugger;
+            apiCall(parseInt(submitButton.value));
+        }
         
     }
+
+    window.addEventListener("unload", function() {
+        saveChat();
+    });
+

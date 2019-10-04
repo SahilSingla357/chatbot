@@ -9,7 +9,7 @@ class QuestionSerializer(ModelSerializer):
 
     class Meta:
         model = Question
-        fields = ('id', 'vendor', 'question_text', 'category',
+        fields = ('id', 'vendor', 'question_text', 'category', 'next_default_question_id',
                   'is_first_question', 'is_active', 'response_data')
 
 

@@ -100,25 +100,26 @@ function responseOptions(res, category) {
         responseList.insertBefore(responseElement, responseList.childNodes[0]);
 
     }
-    //adding the selected response to the chat
+}
+//adding the selected response to the chat
 
-    function responseComment(resComment) {
-        var responseComment = document.createElement("LI");
-        responseComment.setAttribute("class", "messages response-comment");
-        responseComment.appendChild(document.createTextNode(resComment));
-        document.getElementById("messages").appendChild(responseComment);
-    }
-    function responseMessage(respMessage, resComment) {
-        var responseElement = document.createElement("LI");
-        responseElement.setAttribute("class", "messages user-response");
-        responseElement.appendChild(document.createTextNode(respMessage));
-        document.getElementById("messages").appendChild(responseElement);
+function responseComment(resComment) {
+    var responseComment = document.createElement("LI");
+    responseComment.setAttribute("class", "messages response-comment");
+    responseComment.appendChild(document.createTextNode(resComment));
+    document.getElementById("messages").appendChild(responseComment);
+}
+function responseMessage(respMessage, resComment) {
+    var responseElement = document.createElement("LI");
+    responseElement.setAttribute("class", "messages user-response");
+    responseElement.appendChild(document.createTextNode(respMessage));
+    document.getElementById("messages").appendChild(responseElement);
 
-        if (resComment != "") {
-            responseComment(resComment);
-        }
+    if (resComment != "") {
+        responseComment(resComment);
     }
 }
+
 
 function clearResponses() {
     var responseList = document.getElementById("response-list");

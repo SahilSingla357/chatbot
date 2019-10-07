@@ -3,3 +3,4 @@ chatbot_info_log: INFO 2019-10-04 12:37:05,246 /Users/admin/HT_MEDIA/projects/ch
 chatbot_info_log: INFO 2019-10-04 12:39:21,437 /Users/admin/HT_MEDIA/projects/chatbot/apps/quesresp/api/views.py 48 System Ip - 127.0.0.1; Vendor Id - 1; Response Id's - 1; Prev Question Id - 1
 chatbot_info_log: INFO 2019-10-04 12:39:21,437 /Users/admin/HT_MEDIA/projects/chatbot/apps/quesresp/api/views.py 48 System Ip - 127.0.0.1; Vendor Id - 1; Response Id's - 1; Prev Question Id - 1
 chatbot_info_log: INFO 2019-10-04 12:40:31,926 /Users/admin/HT_MEDIA/projects/chatbot/apps/quesresp/api/views.py 45 System Ip - 127.0.0.1; Vendor Id - 1; Response Id's - 1; Prev Question Id - 1
+chatbot_info_log: INFO 2019-10-07 09:26:06,920 /Users/admin/HT_MEDIA/projects/chatbot/apps/quesresp/api/views.py 44 System Ip - 127.0.0.1; Vendor Id - 1; Response Id's - 1; Prev Question Id - 1

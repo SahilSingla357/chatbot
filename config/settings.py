@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import sys
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -84,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'chatbot',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': 'admin',
         'HOST': '',
         'PORT': '',
     },
@@ -92,7 +94,7 @@ DATABASES = {
         'NAME': 'chatbot',
         'ENGINE': 'django.db.backends.mysql',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': 'admin',
         'HOST': '',
         'PORT': '',
     },
@@ -100,13 +102,80 @@ DATABASES = {
         'NAME': 'chatbot',
         'ENGINE': 'django.db.backends.mysql',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': 'admin',
         'HOST': '',
         'PORT': '',
     }
 }
 
 # UPDATE mysql.user SET Password = PASSWORD('root') WHERE User = 'root'
+
+
+######## LOGGING CONFIG ############################
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'formatters': {
+        'verbose': {
+            'format': 'chatbot_%(name)s: %(levelname)s %(asctime)s %(pathname)s %(lineno)s %(message)s'
+        },
+        'simple': {
+            'format': '[%(asctime)s] %(levelname)s %(message)s',
+            'datefmt': '%d/%b/%Y %H:%M:%S'
+        },
+    },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.handlers.SysLogHandler',
+            'facility': 'local4',
+            'formatter': 'simple'
+        },
+        'syslog': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            # 'facility': 'local4',
+            'formatter': 'verbose',
+            'filename': os.path.join(BASE_DIR, 'logger', 'info.log'),
+
+        },
+    },
+    'loggers': {
+        # root logger
+        'info_log': {
+            'handlers': ['syslog'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'error_log': {
+            'handlers': ['syslog'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
+
+# ###### LOGGING SETTINGS #############
+# SYSLOG_ADDRESS = '/dev/log'
+# # Following is to make sure logging works with mac machines 2
+# if sys.platform == "darwin":
+#     SYSLOG_ADDRESS = "/var/run/syslog"
+# # LOGGING['handlers']['syslog']['address'] = SYSLOG_ADDRESS
 
 
 # Password validation

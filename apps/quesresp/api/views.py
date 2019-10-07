@@ -4,6 +4,10 @@ from shared.constants import stringToBool
 from ..models import Question, Response, QuesRespRelation
 from .serializers import QuestionSerializer, ResponseSerializer, QuesRespRelSerializer
 
+import logging; 
+
+import ipdb;
+
 
 class QuestionList(ListAPIView):
     serializer_class = QuestionSerializer
@@ -22,6 +26,23 @@ class QuestionList(ListAPIView):
 class QuestionDetail(RetrieveAPIView):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
+
+    def visitor_ip_address(self,request): 
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        return ip
+
+    def get(self, request, *args, **kwargs):
+        system_ip = self.visitor_ip_address(request)
+        vendor_id = self.kwargs.get('vendor_id','')
+        response_id = request.GET.get('resp','')
+        prev_question_id = request.GET.get('lques','')
+        if response_id and prev_question_id: 
+            logging.getLogger('info_log').info('System Ip - {}; Vendor Id - {}; Response Id\'s - {}; Prev Question Id - {}'.format(system_ip, vendor_id,response_id, prev_question_id))
+        return super(QuestionDetail,self).get(request,*args, **kwargs);
 
 
 class ResponseList(ListAPIView):

@@ -1,0 +1,6 @@
+chat_env/
+.idea
+log/
+.vscode
+*.py[cod]
+.DS_Store

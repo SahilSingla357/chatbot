@@ -29,7 +29,7 @@ class Question(AdminAction, models.Model):
     #note this carefully
     @property
     def response_data(self):
-        return self.quesresprelation_set.values('question_next', response_text=models.F('response__response_text'),comment=models.F('response__comment'))
+        return self.quesresprelation_set.values('question_next', response_text=models.F('response__response_text'),comment=models.F('response__comment'),response_id=models.F('response__id'))
 
 
 class Response(AdminAction, models.Model):

@@ -86,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'chatbot',
         'USER': 'root',
-        'PASSWORD': 'admin',
+        'PASSWORD': 'root',
         'HOST': '',
         'PORT': '',
     },
@@ -94,7 +94,7 @@ DATABASES = {
         'NAME': 'chatbot',
         'ENGINE': 'django.db.backends.mysql',
         'USER': 'root',
-        'PASSWORD': 'admin',
+        'PASSWORD': 'root',
         'HOST': '',
         'PORT': '',
     },
@@ -102,7 +102,7 @@ DATABASES = {
         'NAME': 'chatbot',
         'ENGINE': 'django.db.backends.mysql',
         'USER': 'root',
-        'PASSWORD': 'admin',
+        'PASSWORD': 'root',
         'HOST': '',
         'PORT': '',
     }
@@ -221,4 +221,4 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = ('*',)
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
-MEDIA_URL = "/media/"
+MEDIA_URL = "/"

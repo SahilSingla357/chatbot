@@ -5,3 +5,5 @@ log/
 *.py[cod]
 .DS_Store
 logger/
+#virtual envirments
+venv/

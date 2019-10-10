@@ -17,7 +17,6 @@ class QuestionList(ListAPIView):
         vendor_id = self.kwargs['vendor_id']
         queryset = self.queryset.filter(vendor_id=vendor_id)
         ifq = self.request.GET.get("ifq", None) #ifq= if first question
-        fq = self.request.GET.get("fq", None)   #fq= is feedback question
         if ifq: 
             queryset = queryset.filter(is_first_question=stringToBool.get(ifq))
         return queryset

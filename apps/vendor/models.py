@@ -48,6 +48,8 @@ class Vendor(models.Model):
     script = models.TextField(_('Script'), blank=True)
     is_active = models.BooleanField(
         default=False, help_text='Designates whether a vendor is active or not')
+    chatbot_image = models.ImageField(upload_to='chatbotImage/', blank=True, null=True)
+    chatbot_title = models.CharField(max_length = 100, help_text="title of the chatbot", blank=True, null=True)
 
     self_save = False
     

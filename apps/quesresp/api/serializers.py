@@ -17,7 +17,8 @@ class ResponseSerializer(ModelSerializer):
 
     class Meta:
         model = Response
-        fields = ('id', 'vendor', 'response_text','comment','is_active')
+        fields = ('id', 'vendor', 'response_text', 'comment', 'response_image_url',
+                  'response_url', 'is_active')
 
 
 class QuesRespRelSerializer(ModelSerializer):

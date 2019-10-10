@@ -1,4 +1,4 @@
-var vendor = "1";
+var vendor = "15";
 
 var bootstrap = '<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">' + '</' + 'script>' + '<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js">' + '</' + 'script><link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">';
 // may required to be passed 
@@ -33,67 +33,41 @@ function responseOptions(res, category) {
     var responseText = res.response_text;
     var responseId = res.response_id;
 
-    if (category == 2) {
-
+    if(category == 2 || category == 3){
         document.getElementById("feedback-response-list").style.display = "block";
 
         var divElement = document.createElement("div");
         divElement.setAttribute("class", "input-body");
         var feedbackResponse = document.createElement("input");
-        feedbackResponse.setAttribute("type", "checkbox");
+        if(category == 2){
+            feedbackResponse.setAttribute("type", "checkbox");}
+        else if(category == 3){
+            feedbackResponse.setAttribute("type", "radio");
+            feedbackResponse.setAttribute("name", "feedback");}
         feedbackResponse.setAttribute("class", "feedback-response");
         feedbackResponse.setAttribute("value", res.response_text);
         feedbackResponse.setAttribute("id", res.response_text);
         feedbackResponse.setAttribute("data-response-id", responseId);
 
         divElement.appendChild(feedbackResponse);
-        // feedbackResponse.setAttribute("data-question-next", questionNext);
-        // feedbackResponse.appendChild(document.createTextNode(responseText));
-        // feedbackResponse.insertAdjacentText("beforeend", res.response_text);
-        // document.createElement('br').insertAfter(feedbackResponse)
         var labelElement = document.createElement("label");
         labelElement.setAttribute("for", res.response_text);
         labelElement.appendChild(document.createElement("span"));
         labelElement.appendChild(document.createTextNode(responseText));
-        // spanInputElement.parentNode.insertBefore(spanElement,spanInputElement.nextSibling);
+
         divElement.appendChild(labelElement);
         document.getElementById("feedback-response-list").insertBefore(divElement, document.getElementById("feedback-response-list").childNodes[0]);
-    } else if (category == 3) {
-
-        document.getElementById("feedback-response-list").style.display = "block";
-
-        var divElement = document.createElement("div");
-        divElement.setAttribute("class", "input-body");
-        var feedbackResponse = document.createElement("input");
-        feedbackResponse.setAttribute("type", "radio");
-        feedbackResponse.setAttribute("class", "feedback-response");
-        feedbackResponse.setAttribute("value", res.response_text);
-        feedbackResponse.setAttribute("name", "feedback");
-        feedbackResponse.setAttribute("id", res.response_text);
-        feedbackResponse.setAttribute("data-response-id", responseId);
-        divElement.appendChild(feedbackResponse);
-        // feedbackResponse.setAttribute("data-question-next", questionNext);
-        // feedbackResponse.appendChild(document.createTextNode(responseText));
-        // feedbackResponse.innerHTML = '"'+responseText+'"';
-
-        // feedbackResponse.insertAdjacentText("beforeend", res.response_text);
-        // document.createElement('br').insertAfter(feedbackResponse)
-        var labelElement = document.createElement("label");
-        labelElement.setAttribute("for", res.response_text);
-        labelElement.appendChild(document.createElement("span"));
-        labelElement.appendChild(document.createTextNode(responseText));
-        // feedbackResponse.parentNode.insertBefore(document.createElement('br'),feedbackResponse.nextSibling)
-        // feedbackResponse.parentNode.insertBefore(document.createTextNode(responseText),feedbackResponse.nextSibling)
-        divElement.appendChild(labelElement);
-        document.getElementById("feedback-response-list").insertBefore(divElement, document.getElementById("feedback-response-list").childNodes[0]);
-
     } else {
 
         var responseComment = res.comment;
+        var responseImageUrl = res.response_image_url;
+        var responseUrl = res.response_url;
         var responseElement = document.createElement("LI");
         var responseList = document.getElementById("response-list");
         responseElement.setAttribute("data-question-next", questionNext);
         responseElement.setAttribute("data-response-comment", responseComment);
+        responseElement.setAttribute("data-response-image-url", responseImageUrl);
+        responseElement.setAttribute("data-response-url", responseUrl);
         responseElement.setAttribute("onclick", "fetchQuestion(this)");
         responseElement.setAttribute("data-response-id", responseId);
         responseElement.appendChild(document.createTextNode(responseText));
@@ -102,6 +76,10 @@ function responseOptions(res, category) {
     }
 }
 //adding the selected response to the chat
+function autoScrollDown(){
+    var length = document.getElementsByClassName("user-response").length - 1;
+    document.getElementsByClassName("user-response")[length].scrollIntoView();
+}
 
 function responseComment(resComment) {
     var responseComment = document.createElement("LI");
@@ -109,7 +87,28 @@ function responseComment(resComment) {
     responseComment.appendChild(document.createTextNode(resComment));
     document.getElementById("messages").appendChild(responseComment);
 }
-function responseMessage(respMessage, resComment) {
+function responseImage(resImageURL, resURL){
+    var responseComment = document.createElement("LI");
+    responseComment.setAttribute("class", "messages response-comment");
+
+    var image_element = document.createElement("img");
+    image_element.setAttribute("src",resImageURL);
+    image_element.setAttribute("alt","Link to product");
+    image_element.setAttribute("style","width:100%;")
+
+    if(resURL != "null"){
+    image_url = document.createElement("a");
+    image_url.setAttribute("href",resURL);
+    image_url.appendChild(image_element);
+    responseComment.appendChild(image_url);}
+    else {
+     responseComment.appendChild(image_element);   
+    }
+    document.getElementById("messages").appendChild(responseComment);
+}
+
+function responseMessage(respMessage, resComment, resImageURL, resURL) {
+    debugger;
     var responseElement = document.createElement("LI");
     responseElement.setAttribute("class", "messages user-response");
     responseElement.appendChild(document.createTextNode(respMessage));
@@ -117,6 +116,9 @@ function responseMessage(respMessage, resComment) {
 
     if (resComment != "") {
         responseComment(resComment);
+    }
+    if (resImageURL != "null"){
+        responseImage(resImageURL, resURL);
     }
 }
 
@@ -151,6 +153,7 @@ function apiCall(questionId, currRespId = null, lastQuesId = null) {
                 var submitButton = document.getElementById("submit-button");
                 submitButton.setAttribute("value", response.next_default_question_id);
             }
+            autoScrollDown();
         });
 }
 
@@ -170,12 +173,14 @@ function openChat() {
             questionAsked(chatHistory[count].question);
             debugger;
             if (chatHistory[count].response) {
-                responseMessage(chatHistory[count].response, chatHistory[count].comment);
+                responseMessage(chatHistory[count].response, chatHistory[count].comment, chatHistory[count].imageURL, chatHistory[count].URL);
             }
         }
         if (localStorage.getItem("last_Question")) {
             var questionId = parseInt(localStorage.getItem("last_Question"));
             apiCall(questionId);
+        }else{
+            endMessage("thanks for the feedback");
         }
         return;
     }
@@ -202,13 +207,15 @@ function openChat() {
 function fetchQuestion(resp) {
     debugger;
     respMessage = resp.innerHTML;
-    var respComment = resp.dataset.responseComment;
+    var resComment = resp.dataset.responseComment;
+    var resImageURL = resp.dataset.responseImageUrl;
+    var resURL = resp.dataset.responseUrl;
     var questionNextId = resp.dataset.questionNext;
     var currRespId = resp.dataset.responseId;
     var lastQuesId = parseInt(localStorage.getItem("last_Question")) || -1;
 
     //adding the selected response to the chat
-    responseMessage(respMessage, respComment);
+    responseMessage(respMessage, resComment, resImageURL, resURL);
 
     //put code to delete chat here later
     clearResponses()
@@ -226,6 +233,7 @@ function fetchQuestion(resp) {
 
     apiCall(questionNextId, currRespId, lastQuesId);
 }
+
 function closeChat() {
     document.getElementById("myForm").style.display = "none";
 }
@@ -241,31 +249,43 @@ function saveChat() {
     var question = "";
     var response = "";
     var comment = "";
+    var imageURL = "null";
+    var URL = "null";
     for (var i = 0; i < chat.length; i = i + 1) {
         var value = chat[i].classList.value;
         if (value.includes("question-asked")) {
             if (question != "") {
-                chatHistory.push({ question: question, response: response, comment: comment });
+                chatHistory.push({ question: question, response: response, comment: comment, imageURL: imageURL, URL: URL});
                 question = "";
                 response = "";
                 comment = "";
+                imageURL = "null";
+                URL = "null";
             }
             question = chat[i].innerHTML;
         } else if (value.includes("user-response")) {
             if (response != "") {
-                response += ","
+                response += ", "
             }
             response += chat[i].innerHTML
         } else if (value.includes("response-comment")) {
-            comment += chat[i].innerHTML
+            if (chat[i].getElementsByTagName("a")[0]){
+                debugger;
+                URL = chat[i].getElementsByTagName("a")[0].getAttribute("href");
+                image_element = chat[i].getElementsByTagName("a")[0];
+                imageURL = image_element.getElementsByTagName("img")[0].getAttribute("src");
+            }else{
+                comment += chat[i].innerHTML;
+            }
         }
         if (i == chat.length - 1 && !(value.includes("question-asked"))) {
-            chatHistory.push({ question: question, response: response, comment: comment })
+            chatHistory.push({ question: question, response: response, comment: comment, imageURL: imageURL, URL: URL})
         }
     }
     chatHistory = JSON.stringify(chatHistory);
     localStorage.setItem("chatHistory", chatHistory);
 }
+
 function refresh() {
     closeChat();
     chatBotDiv.innerHTML = html;
@@ -297,7 +317,7 @@ function submitFunction() {
         }
     }
     if (message != "") {
-        responseMessage(message, "");
+        responseMessage(message, "", "null", "null");
     }
 
     clearResponses();
@@ -309,6 +329,7 @@ function submitFunction() {
     localStorage.removeItem("last_Question");
     saveChat();
     endMessage("thanks for the feedback");
+    autoScrollDown();
 }
 
 

@@ -30,7 +30,7 @@ html {
 
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 button:focus,
@@ -43,7 +43,7 @@ button:active {
 }
 
 .icon-comment-dots {
-  background: url(chatbotImage/sprite.png) no-repeat 0 0;
+  background: url(sprite.png) no-repeat 0 0;
   width: 2.3rem;
   height: 1.9rem;
   display: inline-block;
@@ -51,7 +51,7 @@ button:active {
 }
 
 .icon-shiney {
-  background: url(chatbotImage/sprite.png) no-repeat 0 -2.1rem;
+  background: url(LOGO_PATH) no-repeat 0 0;
   width: 3.4rem;
   height: 3.9rem;
   display: inline-block;
@@ -59,7 +59,7 @@ button:active {
 }
 
 .icon-shiney-sm {
-  background: url(chatbotImage/sprite.png) no-repeat -4rem -2.1rem;
+  background: url(sprite.png) no-repeat -4rem -2.1rem;
   width: 2.4rem;
   height: 2.6rem;
   display: inline-block;
@@ -141,7 +141,7 @@ button:active {
 
 .chat-header__close {
   border: none;
-  background: url(chatbotImage/sprite.png) no-repeat -3.1rem 0;
+  background: url(sprite.png) no-repeat -3.1rem 0;
   width: 1.6rem;
   height: 1.6rem;
   display: inline-block;
@@ -151,7 +151,7 @@ button:active {
 
 .chat-header__refresh {
   border: none;
-  background: url(chatbotImage/sprite.png) no-repeat -5.7rem 0;
+  background: url(sprite.png) no-repeat -5.7rem 0;
   width: 2.2rem;
   height: 1.8rem;
   display: inline-block;
@@ -189,7 +189,8 @@ button:active {
   left: -3.6rem;
   top: 1rem;
   display: inline-block;
-  background: url(chatbotImage/sprite.png) no-repeat -40px -21px;
+  background: url(LOGO_PATH) no-repeat 0 0;
+  background-size: cover;
   width: 24px;
   height: 26px;
 }

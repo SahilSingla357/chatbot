@@ -1,29 +1,21 @@
-<div id="success-message"> Thanks for your feedback. We will contact you at our earliest convenience</div>
-<button type="button" class="btn open" onclick="openChat()"><i class='fas fa-comment-alt'></i> &nbsp Lets Chat</button>
-    <div class="chat-popup form-container" id="myForm">
-        <div id="header">
-            <h1>Chat</h1>
-        </div>
-        <div class="container" id="feedback">
-            <form>
-                <label for="fname">First Name</label>
-                <input type="text" id="fname" name="firstname" placeholder="First Name">
-                <br>
-                <label for="lname">Last Name</label>
-                <input type="text" id="lname" name="lastname" placeholder="Last Name">
-                <br>
-                <label for="subject">Feedback</label>
-                <textarea id="subject" name="subject" placeholder="Write something.."></textarea>
-                <input type="submit" onclick="FormSubmit()" value="Submit">
-            </form>
-        </div>
-        <div class="chatflow" id="chatflow">
-            <ul id="messages">
-            </ul>
-            <div class="responses" id="responses-div">
-                <ul id="response-list">
+<button type="button" class="btn-chat" onclick="openChat()"><i class="icon-comment-dots" title="Open Chat"></i></button>
+    <main class="chat-popup form-container" id="myForm">
+        <header class="chat-header" id="header">
+            <h1 class="chat-header__heading"><i class="icon-shiney mr-10"></i> CHATBOT_TITLE</h1>
+            <button class="chat-header__refresh" id="refresh-button" onclick="refresh()" title="Refresh Chat">
+            <button title="Close Chat" type="button" class="chat-header__close" onclick="closeChat()"></button>
+        </header>
+        <div class="chat-body">
+            <div class="chatflow" id="chatflow">
+                <ul id="messages">
                 </ul>
+                <div class="responses" id="responses-div">
+                    <ul id="response-list">
+                        <li id="feedback-response-list" class="feedback-response-list" style="display: none">
+                            <button id="submit-button" name="submit-button" onclick="submitFunction()">Submit</button>
+                        </li>
+                    </ul>
+                </div>
             </div>
-    </div>
-            <button type="button" class="btn cancel" onclick="closeChat()">Close</button>
-        </div>
+        </div>   
+    </main>

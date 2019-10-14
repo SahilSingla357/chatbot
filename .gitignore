@@ -7,4 +7,5 @@ log/
 logger/
 #virtual envirments
 venv/
-ChatBOT-Screens/
+media/script1.js
+media/chatbot.html

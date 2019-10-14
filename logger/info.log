@@ -112,3 +112,5 @@ chatbot_info_log: INFO 2019-10-11 08:25:43,602 /home/sahil/Desktop/chatbot/apps/
 chatbot_info_log: INFO 2019-10-11 08:25:45,350 /home/sahil/Desktop/chatbot/apps/quesresp/api/views.py 43 System Ip - 127.0.0.1; Vendor Id - 15; Response Id's - 12; Prev Question Id - 8
 chatbot_info_log: INFO 2019-10-11 08:25:51,564 /home/sahil/Desktop/chatbot/apps/quesresp/api/views.py 43 System Ip - 127.0.0.1; Vendor Id - 15; Response Id's - 17,16,; Prev Question Id - 9
 chatbot_info_log: INFO 2019-10-11 08:25:58,870 /home/sahil/Desktop/chatbot/apps/quesresp/api/views.py 43 System Ip - 127.0.0.1; Vendor Id - 15; Response Id's - 21,; Prev Question Id - 10
+chatbot_info_log: INFO 2019-10-14 05:52:00,852 /home/sahil/Desktop/chatbot/apps/quesresp/api/views.py 43 System Ip - 127.0.0.1; Vendor Id - 15; Response Id's - 10; Prev Question Id - 7
+chatbot_info_log: INFO 2019-10-14 06:25:00,666 /home/sahil/Desktop/chatbot/apps/quesresp/api/views.py 43 System Ip - 127.0.0.1; Vendor Id - 15; Response Id's - 10; Prev Question Id - 7

@@ -62,7 +62,7 @@ class Application(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         if self.self_save == False:
-            self.script = generate_script(self.pk, settings.MEDIA_ROOT+self.chatbot_icon.url[6:], 
+            self.script = generate_script(self.pk, settings.SITE_DOMAIN+self.chatbot_icon.url, 
                 self.chatbot_title, self.greeting_message, self.end_message)
             self.self_save = True
             super().save(*args, **kwargs)

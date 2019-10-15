@@ -1,5 +1,6 @@
 from django.db import models
 from apps.vendor.models import Vendor
+from apps.application.models import Application
 
 from .config import RESPONSE_TYPE_CHOICES
 from config import settings
@@ -13,7 +14,7 @@ class AdminAction():
 
 
 class Question(AdminAction, models.Model):
-    vendor = models.ForeignKey(Vendor, blank=True, null=True)
+    application = models.ForeignKey(Application, blank=True, null=True)
     question_text = models.TextField()
     is_first_question = models.BooleanField(
         default=False, 
@@ -27,6 +28,7 @@ class Question(AdminAction, models.Model):
     def __str__(self):
         return self.question_text
     
+    #note this carefully
     @property
     def response_data(self):
         fields_to_fetch = ['response_text','comment','response_image_url','response_url']
@@ -39,11 +41,12 @@ class Question(AdminAction, models.Model):
             di.update({'response_id':response.response_id})
             d.append(di)
         return d
-
+        # return self.quesresprelation_set.values('question_next', response_text=models.F('response__response_text'),
+        #     comment=models.F('response__comment'), response_id=models.F('response__id'), response_url=models.F('response__response_url'))
 
 
 class Response(AdminAction, models.Model):
-    vendor = models.ForeignKey(Vendor, blank=True, null=True)
+    application = models.ForeignKey(Application, blank=True, null=True)
     response_text = models.TextField()
     comment = models.TextField(blank=True, null=True, help_text ='used to show comment per response if available')
     response_image = models.ImageField(upload_to='images/', blank=True, null=True)
@@ -53,16 +56,16 @@ class Response(AdminAction, models.Model):
 
     @property
     def response_image_url(self):
-        if self.response_image == None:
+        if self.response_image.name == "":
             return None
-        return settings.MEDIA_ROOT+self.response_image.url
+        return settings.MEDIA_ROOT+self.response_image.url[6:]
 
     def __str__(self):
         return self.response_text
 
 
 class QuesRespRelation(AdminAction, models.Model):
-    vendor = models.ForeignKey(Vendor, blank=True, null=True)
+    application = models.ForeignKey(Application, blank=True, null=True)
     question = models.ForeignKey(Question, blank=True, null=True)
     response = models.ForeignKey(
         Response, related_name='quesresprelation', blank=True, null=True)

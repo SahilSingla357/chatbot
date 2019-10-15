@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'apps.quesresp',
     'apps.vendor',
     'apps.user',
+    'apps.application',
     'rest_framework',
 ]
 
@@ -221,4 +222,9 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = ('*',)
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
-MEDIA_URL = "/"
+MEDIA_URL = "/media/"
+
+try:
+    from .settings_local import *
+except:
+    pass

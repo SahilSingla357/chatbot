@@ -56,6 +56,7 @@ button:active {
   height: 3.9rem;
   display: inline-block;
   vertical-align: middle;
+  background-size: cover;
 }
 
 .icon-shiney-sm {
@@ -63,6 +64,7 @@ button:active {
   width: 2.4rem;
   height: 2.6rem;
   display: inline-block;
+  background-size: cover;
 }
 
 /* Button used to open the chat form - fixed at the bottom of the page */
@@ -279,10 +281,15 @@ button:active {
 }
 
 .chatflow .responses li.feedback-response-list .input-body label span::after{
-  content: "\2713";
+  content: "";
+  background: url(sprite.png) no-repeat -8.8rem 0;
+  width: 1.1rem;
+  height: .9rem;
+  display: inline-block;
   position: absolute;
-  left: 0;
+  left: 1px;
   right: 0;
+  top: 2px;
   opacity: 0;
   transition: opacity .2s;
 }

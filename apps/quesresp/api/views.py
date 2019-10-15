@@ -1,6 +1,7 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from shared.constants import stringToBool
 
+from apps.application.models import Application
 from ..models import Question, Response, QuesRespRelation
 from .serializers import QuestionSerializer, ResponseSerializer, QuesRespRelSerializer
 
@@ -14,8 +15,8 @@ class QuestionList(ListAPIView):
     queryset = Question.objects.all()
 
     def get_queryset(self):
-        vendor_id = self.kwargs['vendor_id']
-        queryset = self.queryset.filter(vendor_id=vendor_id)
+        application_id = self.kwargs['application_id']
+        queryset = self.queryset.filter(application_id=application_id)
         ifq = self.request.GET.get("ifq", None) #ifq= if first question
         if ifq: 
             queryset = queryset.filter(is_first_question=stringToBool.get(ifq))
@@ -36,11 +37,12 @@ class QuestionDetail(RetrieveAPIView):
 
     def get(self, request, *args, **kwargs):
         system_ip = self.visitor_ip_address(request)
-        vendor_id = self.kwargs.get('vendor_id','')
+        application_id = self.kwargs.get('application_id', '')
+        vendor_id = Application.objects.get(id=application_id).vendor_id
         response_id = request.GET.get('resp','')
         prev_question_id = request.GET.get('lques','')
         if response_id and prev_question_id: 
-            logging.getLogger('info_log').info('System Ip - {}; Vendor Id - {}; Response Id\'s - {}; Prev Question Id - {}'.format(system_ip, vendor_id,response_id, prev_question_id))
+            logging.getLogger('info_log').info('System Ip - {}; Vendor Id - {}; Application Id - {};Response Id\'s - {}; Prev Question Id - {}'.format(system_ip, vendor_id,application_id,response_id, prev_question_id))
         return super(QuestionDetail,self).get(request,*args, **kwargs);
 
 
@@ -48,10 +50,10 @@ class ResponseList(ListAPIView):
     serializer_class = ResponseSerializer
 
     def get_queryset(self):
-        vendor_id = self.kwargs['vendor_id']
+        application_id = self.kwargs['application_id']
         question_id = self.kwargs['question_id']
         resp_ids = QuesRespRelation.objects.all().filter(
-            vendor_id=vendor_id, question_id=question_id).values_list('response_id', flat=True)
+            application_id=application_id, question_id=question_id).values_list('response_id', flat=True)
         return Response.objects.filter(id__in=resp_ids)
 
 

@@ -26,3 +26,4 @@ DATABASES = {
     }
 }
 
+SITE_DOMAIN = 'http://localhost:8000/'

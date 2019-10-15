@@ -10,33 +10,33 @@ from cssmin import cssmin
 
 import os
 
-def generate_script(pk, image_url, title):
+# def generate_script(pk, image_url, title):
 
-    logo_path = image_url[1:]
+#     logo_path = image_url[1:]
 
-    path_to_js = settings.MEDIA_ROOT + "/script2.js"
-    path_to_html = settings.MEDIA_ROOT + "/basic.html"
-    path_to_css = settings.MEDIA_ROOT + "/style.css"
+#     path_to_js = settings.MEDIA_ROOT + "/script2.js"
+#     path_to_html = settings.MEDIA_ROOT + "/basic.html"
+#     path_to_css = settings.MEDIA_ROOT + "/style.css"
 
-    file_js = open(path_to_js, "r")
-    file_html = open(path_to_html, "r")
-    file_css = open(path_to_css, "r")
+#     file_js = open(path_to_js, "r")
+#     file_html = open(path_to_html, "r")
+#     file_css = open(path_to_css, "r")
 
-    text_js = file_js.read()
-    text_html = file_html.read()
-    text_html = text_html.replace("CHATBOT_TITLE", title)
-    text_html = htmlmin.minify(text_html)
-    text_css = file_css.read()
-    text_css = text_css.replace("LOGO_PATH", logo_path)
-    text_css = cssmin(text_css)
+#     text_js = file_js.read()
+#     text_html = file_html.read()
+#     text_html = text_html.replace("CHATBOT_TITLE", title)
+#     text_html = htmlmin.minify(text_html)
+#     text_css = file_css.read()
+#     text_css = text_css.replace("LOGO_PATH", logo_path)
+#     text_css = cssmin(text_css)
 
-    text_js = text_js.replace("HTML_CODE", text_html)
-    text_js = text_js.replace("CSS_CODE", text_css)
-    text_js = text_js.replace("VENDOR_ID", str(pk))
+#     text_js = text_js.replace("HTML_CODE", text_html)
+#     text_js = text_js.replace("CSS_CODE", text_css)
+#     text_js = text_js.replace("VENDOR_ID", str(pk))
 
-    minified = jsmin(text_js)
+#     minified = jsmin(text_js)
 
-    return minified
+#     return minified
 
 def path_and_rename(instance, filename):
     upload_to = 'chatbotImage/'
@@ -57,21 +57,6 @@ class Vendor(models.Model):
     mobile = models.CharField(
         _('Mobile Number'), blank=True,
         max_length=20, help_text=_('Mobile Number'))
-    script = models.TextField(_('Script'), blank=True)
-    is_active = models.BooleanField(
-        default=False, help_text='Designates whether a vendor is active or not')
-    chatbot_image = models.ImageField(upload_to=path_and_rename, blank=True, null=True)
-    chatbot_title = models.CharField(max_length=100, help_text="title of the chatbot", 
-        blank=True, null=True)
-
-    self_save = False
-    
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        if self.self_save == False:
-            self.script = generate_script(self.pk, self.chatbot_image.url, self.chatbot_title)
-            self.self_save = True
-            super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name

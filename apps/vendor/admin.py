@@ -13,11 +13,6 @@ class VendorAdmin(admin.ModelAdmin):
     fk_name = 'vendee'
     extra = 0
 
-    def get_readonly_fields(self, request, obj=None):
-        if obj:
-            return ['script']
-        else:
-            return []
 
 
 admin.site.register(models.Vendor, VendorAdmin)

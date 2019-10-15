@@ -1,10 +1,10 @@
 //VARIABLES TO FILL IN
-var vendor = "VENDOR_ID";
+var app_id = "APP_ID";
 var HTMLTEXT = 'HTML_CODE';
 var CSSTEXT = 'CSS_CODE';
 
 var response_html = '<li id="feedback-response-list" class="feedback-response-list" style="display: none"><button id="submit-button" name="submit-button" onclick="submitFunction()">Submit</button></li>';
-var siteDomain = "http://localhost:8000/";
+var siteDomain = "SITE_DOMAIN";
 
 //adding chat-bot div
 var chatBotDiv = document.createElement("div");
@@ -149,7 +149,7 @@ function clearResponses() {
 
 
 function apiCall(questionId, currRespId = null, lastQuesId = null) {
-    var queryString = `${siteDomain}api/vendor/${vendor}/question/${questionId}/`;
+    var queryString = `${siteDomain}api/app/${app_id}/question/${questionId}/`;
     if (currRespId) {
         queryString += `?resp=${currRespId}&`;
     }
@@ -172,7 +172,7 @@ function apiCall(questionId, currRespId = null, lastQuesId = null) {
             }else{
                 localStorage.removeItem("last_Question");
                 saveChat();
-                endMessage("thanks for the feedback");
+                endMessage("END_MESSAGE");
             }
             autoScrollDown();
         });
@@ -200,12 +200,12 @@ function openChat() {
             var questionId = parseInt(localStorage.getItem("last_Question"));
             apiCall(questionId);
         }else{
-            endMessage("thanks for the feedback");
+            endMessage("END_MESSAGE");
         }
         return;
     }
-    questionAsked("Hi! I am Shiney...your personal Digital assistant!");
-    fetch(siteDomain + "api/vendor/" + vendor + "/questions/?ifq=true")
+    questionAsked("GREETING_MESSAGE");
+    fetch(siteDomain + "api/app/" + app_id + "/questions/?ifq=true")
         .then(res => res.json())
         .then(function (response) {
             //accessing first element only, to check for mistakenly more than 1, first questions.
@@ -323,7 +323,7 @@ function submitFunction() {
     for (var i = 0; i < feedbackResponse.length; i = i + 1) {
         if (feedbackResponse[i].checked) {
             if (message != "") {
-                message += ",";
+                message += ", ";
             }
             message += feedbackResponse[i].value;
             if (i !== feedbackResponse.length - 1) {

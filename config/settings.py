@@ -225,6 +225,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL = "/media/"
 
 try:
+    from .settings_staging import *
+except:
+    pass
+
+try:
     from .settings_local import *
 except:
     pass

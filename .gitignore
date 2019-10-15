@@ -4,7 +4,6 @@ log/
 .vscode
 *.py[cod]
 .DS_Store
-logger/
 #virtual envirments
 venv/
 media/script1.js

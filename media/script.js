@@ -109,6 +109,7 @@ function responseImage(resImageURL, resURL){
 
     var image_element = document.createElement("img");
     image_element.setAttribute("src",resImageURL);
+    image_element.setAttribute("target","_blank");
     image_element.setAttribute("alt","Link to product");
     image_element.setAttribute("style","width:100%;")
 

@@ -53,6 +53,8 @@ class Response(AdminAction, models.Model):
     response_url = models.URLField(max_length=300, blank=True, null=True)
     is_active = models.BooleanField(
         default=False, help_text='Designates whether a resposne is active or not')
+    send_user_info = models.BooleanField(
+        default=False, help_text='Designates whether the response_message sends request to vendor or not')
 
     @property
     def response_image_url(self):

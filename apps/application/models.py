@@ -51,6 +51,7 @@ class Application(models.Model):
     chatbot_icon = models.ImageField(upload_to=path_and_rename, blank=True, null=True)
     chatbot_title = models.CharField(max_length=100, help_text="title of the chatbot", 
         blank=True, null=True)
+    end_url = models.URLField(max_length=300, help_text="url to send request to the vendor", blank=True, null=True)
     greeting_message = models.TextField(blank=True, null=True)
     end_message = models.TextField(blank=True, null=True)
     script = models.TextField(blank=True)

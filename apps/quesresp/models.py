@@ -31,7 +31,7 @@ class Question(AdminAction, models.Model):
     #note this carefully
     @property
     def response_data(self):
-        fields_to_fetch = ['response_text','comment','response_image_url','response_url']
+        fields_to_fetch = ['response_text','comment','response_image_url','response_url','send_user_info']
         all_further_responses = QuesRespRelation.objects.filter(question_id=self.id)
         d = []
         for response in all_further_responses:
@@ -41,8 +41,7 @@ class Question(AdminAction, models.Model):
             di.update({'response_id':response.response_id})
             d.append(di)
         return d
-        # return self.quesresprelation_set.values('question_next', response_text=models.F('response__response_text'),
-        #     comment=models.F('response__comment'), response_id=models.F('response__id'), response_url=models.F('response__response_url'))
+
 
 
 class Response(AdminAction, models.Model):
@@ -58,9 +57,9 @@ class Response(AdminAction, models.Model):
 
     @property
     def response_image_url(self):
-        if self.response_image.name == "":
-            return None
-        return settings.MEDIA_ROOT+self.response_image.url[6:]
+        if self.response_image.name:
+            return settings.MEDIA_ROOT+self.response_image.url[6:]
+        return None
 
     def __str__(self):
         return self.response_text

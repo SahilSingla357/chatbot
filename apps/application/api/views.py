@@ -16,13 +16,14 @@ import logging;
 class UserDetail(views.APIView):
     serializer_class = UserDetailSerializer
 
-    def get(self, **kwargs):
-        api_endpoint = Application.objects.get(application_id=kwargs['application_id'])['end_url']
-        data = {"name":self.request.GET['name'],
-                "email":self.request.GET['email'],
-                "mobile":self.request.GET['mobile']
+    def get(self,request, *arg, **kwargs):
+        api_endpoint = Application.objects.get(id=int(kwargs['application_id'])).end_url
+        data = {"name":self.request.GET.get('name',),
+                "email":self.request.GET.get('email',),
+                "mobile":self.request.GET.get('mobile',)
                }
-        requests.post(url=api_endpoint, data=data)
+        if api_endpoint:
+            requests.post(url=api_endpoint, data=data)
         results = UserDetailSerializer(data).data
         return Response(results)
 

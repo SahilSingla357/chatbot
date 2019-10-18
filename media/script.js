@@ -45,6 +45,7 @@ function questionAsked(questionText) {
 
 //adding all the possible options from that question
 function responseOptions(res, category) {
+
     var questionNext = res.question_next;
     var responseText = res.response_text;
     var responseId = res.response_id;
@@ -86,6 +87,9 @@ function responseOptions(res, category) {
         responseElement.setAttribute("data-response-url", responseUrl);
         responseElement.setAttribute("onclick", "fetchQuestion(this)");
         responseElement.setAttribute("data-response-id", responseId);
+        if(res.send_user_info){
+            responseElement.setAttribute("data-send-user-info", res.send_user_info);
+        }
         responseElement.appendChild(document.createTextNode(responseText));
         responseList.insertBefore(responseElement, responseList.childNodes[0]);
 
@@ -137,7 +141,24 @@ function responseMessage(respMessage, resComment, resImageURL, resURL) {
         responseImage(resImageURL, resURL);
     }
 }
-
+function vendorResponse(){
+    var queryString = `${siteDomain}api/app/${app_id}/user-detail/?`;
+    if(window['name']){
+        queryString +=`name=`+window['name'];
+    }
+    if(window['email']){
+        queryString += `&email=`+window['email'];
+    }
+    if(window['mobile']){
+        queryString +=`&mobile`+window['mobile'];
+    }
+    fetch(queryString)
+        .then(res => res.json())
+        .then(function (response) {
+        }).catch(function(){
+            console.log("vendor response api error")
+        });
+}
 
 function clearResponses() {
     var responseList = document.getElementById("response-list");
@@ -235,6 +256,9 @@ function fetchQuestion(resp) {
     var lastQuesId = parseInt(localStorage.getItem("last_Question")) || -1;
 
     //adding the selected response to the chat
+    if(resp.dataset.sendUserInfo){
+        vendorResponse();
+    }
     responseMessage(respMessage, resComment, resImageURL, resURL);
 
     //put code to delete chat here later

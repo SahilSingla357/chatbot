@@ -224,12 +224,6 @@ CORS_ORIGIN_WHITELIST = ('*',)
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL = "/media/"
 
-try:
-    from .settings_staging import *
-except:
-    pass
+SITE_DOMAIN = 'http://localhost:8000/'
 
-try:
-    from .settings_local import *
-except:
-    pass
+

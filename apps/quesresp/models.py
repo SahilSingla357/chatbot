@@ -31,7 +31,7 @@ class Question(AdminAction, models.Model):
     #note this carefully
     @property
     def response_data(self):
-        fields_to_fetch = ['response_text','comment','response_image_url','response_url']
+        fields_to_fetch = ['response_text','comment','response_image_url','response_url','send_user_info']
         all_further_responses = QuesRespRelation.objects.filter(question_id=self.id)
         d = []
         for response in all_further_responses:
@@ -41,8 +41,7 @@ class Question(AdminAction, models.Model):
             di.update({'response_id':response.response_id})
             d.append(di)
         return d
-        # return self.quesresprelation_set.values('question_next', response_text=models.F('response__response_text'),
-        #     comment=models.F('response__comment'), response_id=models.F('response__id'), response_url=models.F('response__response_url'))
+
 
 
 class Response(AdminAction, models.Model):
@@ -53,12 +52,14 @@ class Response(AdminAction, models.Model):
     response_url = models.URLField(max_length=300, blank=True, null=True)
     is_active = models.BooleanField(
         default=False, help_text='Designates whether a resposne is active or not')
+    send_user_info = models.BooleanField(
+        default=False, help_text='Designates whether the response_message sends request to vendor or not')
 
     @property
     def response_image_url(self):
-        if self.response_image.name == "":
-            return None
-        return settings.SITE_DOMAIN+self.response_image.url;
+        if self.response_image.name:
+            return settings.SITE_DOMAIN+self.response_image.url[1:]
+        return None
 
     def __str__(self):
         return self.response_text

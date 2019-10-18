@@ -51,6 +51,7 @@ class Application(models.Model):
     chatbot_icon = models.ImageField(upload_to=path_and_rename, blank=True, null=True)
     chatbot_title = models.CharField(max_length=100, help_text="title of the chatbot", 
         blank=True, null=True)
+    end_url = models.URLField(max_length=300, help_text="url to send request to the vendor", blank=True, null=True)
     greeting_message = models.TextField(blank=True, null=True)
     end_message = models.TextField(blank=True, null=True)
     script = models.TextField(blank=True)
@@ -62,7 +63,7 @@ class Application(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         if self.self_save == False:
-            self.script = generate_script(self.pk, settings.SITE_DOMAIN+self.chatbot_icon.url, 
+            self.script = generate_script(self.pk, settings.SITE_DOMAIN+self.chatbot_icon.url[1:], 
                 self.chatbot_title, self.greeting_message, self.end_message)
             self.self_save = True
             super().save(*args, **kwargs)

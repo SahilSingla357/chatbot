@@ -1,3 +1,5 @@
+from .settings import *
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -25,4 +27,4 @@ DATABASES = {
     }
 }
 
-SITE_DOMAIN = 'http://localhost:8000/'
+SITE_DOMAIN = 'https://learning1.shine.com/'

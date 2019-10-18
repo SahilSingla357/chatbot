@@ -311,38 +311,10 @@ button:active {
 
 /*-------- old css -------*/
 
-/*.chat-bot {font-family: Arial, Helvetica, sans-serif;
-  box-sizing: border-box;}*/
-
-
-
-
-
-
-
-.btn {
-  background-color: #008CBA;
-  color: white;
-  padding: 5px 10px;
-  border: none;
-  cursor: pointer;
-  /*width: 20px;*/
-  margin-bottom:10px;
-  opacity: 0.8;
-}
-
-/* Add some hover effects to buttons */
-.form-container .btn:hover, .open-button:hover {
-  opacity: 1;
-}
-
 .responses {
   cursor: pointer;
 }
 
-.container {
-  display: none;
-}
 
 #success-message {
   visibility: hidden;
@@ -384,4 +356,16 @@ button:active {
 @keyframes fadeout {
   from {bottom: 30px; opacity: 1;}
   to {bottom: 0; opacity: 0;}
+}
+
+@media only screen and (max-width: 1023px) {
+  .btn-chat {
+    bottom: 6rem;
+    right: 1rem;
+  }
+
+  .chat-popup {
+    bottom: 12rem;
+    right: 1rem;
+  }
 }

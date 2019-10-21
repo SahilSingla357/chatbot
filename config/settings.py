@@ -27,7 +27,7 @@ SECRET_KEY = 'jq#7$-#59#)4*st2^f&570^mw5ex98p18nw@p630mw@^bd!z)1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -149,10 +149,10 @@ LOGGING = {
         },
         'syslog': {
             'level': 'DEBUG',
-            'class': 'logging.FileHandler',
+            'class': 'logging.handlers.SysLogHandler',
             # 'facility': 'local4',
             'formatter': 'verbose',
-            'filename': os.path.join(BASE_DIR, 'logger', 'info.log'),
+            #'filename': os.path.join(BASE_DIR, 'logger', 'info.log'),
 
         },
     },

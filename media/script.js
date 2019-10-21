@@ -150,7 +150,7 @@ function vendorResponse(){
         queryString += `&email=`+window['email'];
     }
     if(window['mobile']){
-        queryString +=`&mobile`+parseInt(window['mobile']);
+        queryString +=`&mobile=`+parseInt(window['mobile']);
     }
     fetch(queryString)
         .then(res => res.json())

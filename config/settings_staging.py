@@ -1,4 +1,4 @@
-exitI0from .settings import *
+from .settings import *
 
 DATABASES = {
     'default': {

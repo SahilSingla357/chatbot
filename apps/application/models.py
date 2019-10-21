@@ -1,6 +1,7 @@
 from django.db import models
 from apps.vendor.models import Vendor
 from config import settings
+from core.library.gcloud.custom_cloud_storage import GCPMediaStorage
 
 
 from jsmin import jsmin
@@ -63,8 +64,12 @@ class Application(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         if self.self_save == False:
-            self.script = generate_script(self.pk, settings.SITE_DOMAIN+self.chatbot_icon.url[1:], 
+            js_script = generate_script(self.pk, settings.SITE_DOMAIN+self.chatbot_icon.url[1:], 
                 self.chatbot_title, self.greeting_message, self.end_message)
+            vendor = self.vendor.get('name','')
+            filename = vendor+'_'+self.application_name
+            GCPMediaStorage().save('chatbot/' + filename, js_script)
+            self.script = js_script
             self.self_save = True
             super().save(*args, **kwargs)
 

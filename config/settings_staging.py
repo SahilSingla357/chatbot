@@ -1,4 +1,4 @@
-from .settings import *
+exitI0from .settings import *
 
 DATABASES = {
     'default': {
@@ -44,3 +44,6 @@ GCP_STATIC_BUCKET = 'learning-static-staging-189607'
 
 INVOICE_FILE_STORAGE = 'core.library.gcloud.custom_cloud_storage.GCPInvoiceStorage'
 GCP_INVOICE_BUCKET = 'learning-invoices-staging-189607'
+
+GCP_MEDIA_LOCATION = "c/m/"
+GCP_STATIC_LOCATION = "c/s/"

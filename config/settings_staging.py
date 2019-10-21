@@ -27,4 +27,4 @@ DATABASES = {
     }
 }
 
-SITE_DOMAIN = 'https://learning1.shine.com/'
+SITE_DOMAIN = 'https://learning1.shine.com/chatbot/'

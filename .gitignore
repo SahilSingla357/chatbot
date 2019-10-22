@@ -11,4 +11,3 @@ media/chatbot.html
 media/chatbotImage
 media/images
 config/settings_local.py
-*.pyc

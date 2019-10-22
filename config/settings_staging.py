@@ -53,5 +53,5 @@ GCP_STATIC_LOCATION = "c/s/"
 
 
 # GS_AUTO_CREATE_BUCKET = True
-STATIC_URL_GCP = 'https://{}.storage.googleapis.com/c/s/'.format(GCP_STATIC_BUCKET)
-MEDIA_URL_GCP = 'https://{}.storage.googleapis.com/c/m/'.format(GS_BUCKET_NAME)
+STATIC_URL = 'https://{}.storage.googleapis.com/c/s/'.format(GCP_STATIC_BUCKET)
+MEDIA_URL = 'https://{}.storage.googleapis.com/c/m/'.format(GS_BUCKET_NAME)

@@ -26,7 +26,7 @@ SECRET_KEY = 'jq#7$-#59#)4*st2^f&570^mw5ex98p18nw@p630mw@^bd!z)1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-IS_GCP = False
+IS_GCP = True
 ALLOWED_HOSTS = ['*']
 
 

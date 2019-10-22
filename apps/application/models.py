@@ -66,8 +66,8 @@ class Application(models.Model):
         if self.self_save == False:
             js_script = generate_script(self.pk, settings.SITE_DOMAIN+self.chatbot_icon.url[1:], 
                 self.chatbot_title, self.greeting_message, self.end_message)
-            vendor = self.vendor.get('name','')
-            filename = vendor+'_'+self.application_name
+            v_name = self.vendor.name
+            filename = v_name+'_'+self.application_name
             GCPMediaStorage().save('chatbot/' + filename, js_script)
             self.script = js_script
             self.self_save = True

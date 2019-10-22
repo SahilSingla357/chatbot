@@ -33,7 +33,7 @@ class GCPStaticStorage(GoogleCloudStorageMixin):
         #     "compressor.storage.CompressorFileStorage")()
 
     def url(self, name):
-        return settings.STATIC_URL_GCP + name
+        return settings.STATIC_URL + name
 
     def save(self, name, content, max_length=None):
         self.local_storage._save(name, content)
@@ -51,7 +51,7 @@ class GCPMediaStorage(GoogleCloudStorageMixin):
     cache_control = "max-age=86400"
 
     def url(self, name):
-        return settings.MEDIA_URL_GCP + name
+        return settings.MEDIA_URL + name
 
 
 @deconstructible

@@ -2,7 +2,7 @@ from django.db import models
 from apps.vendor.models import Vendor
 from config import settings
 from apps.core.library.gcloud.custom_cloud_storage import GCPMediaStorage
-
+from django.core.files.uploadedfile import UploadedFile
 
 from jsmin import jsmin
 import htmlmin
@@ -67,8 +67,13 @@ class Application(models.Model):
             js_script = generate_script(self.pk, settings.SITE_DOMAIN+self.chatbot_icon.url[1:], 
                 self.chatbot_title, self.greeting_message, self.end_message)
             v_name = self.vendor.name
-            filename = v_name+'_'+self.application_name
-            GCPMediaStorage().save('chatbot/' + filename, js_script)
+            filename = v_name+'_'+self.application_name+'.js'
+            f=open("filename","wb+")
+            f.write(str.encode(js_script))
+            # js_script = UploadedFile(js_script)
+            if IS_GCP:
+                GCPMediaStorage().save('chatbot/' + filename, f);
+            f.close();
             self.script = js_script
             self.self_save = True
             super().save(*args, **kwargs)

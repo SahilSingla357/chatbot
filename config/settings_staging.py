@@ -27,6 +27,8 @@ DATABASES = {
     }
 }
 
+IS_GCP = True
+
 SITE_DOMAIN = 'https://learning1.shine.com/chatbot/'
 
 ###### STORAGE SETTINGS #############

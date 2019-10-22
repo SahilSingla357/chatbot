@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'apps.quesresp',
     'apps.vendor',
     'apps.user',
+    'apps.core',
     'apps.application',
     'rest_framework',
 ]

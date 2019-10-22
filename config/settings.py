@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'apps.core',
     'apps.application',
     'rest_framework',
+    'compressor',
+
 ]
 
 MIDDLEWARE = [
@@ -77,6 +79,12 @@ TEMPLATES = [
     },
 ]
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
+
 WSGI_APPLICATION = 'config.wsgi.application'
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = PROJECT_DIR + '/chatbot/config/code-learning-key.json'
@@ -89,7 +97,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'chatbot',
         'USER': 'root',
-        'PASSWORD': 'admin',
+        'PASSWORD': 'root',
         'HOST': '',
         'PORT': '',
     },
@@ -97,7 +105,7 @@ DATABASES = {
         'NAME': 'chatbot',
         'ENGINE': 'django.db.backends.mysql',
         'USER': 'root',
-        'PASSWORD': 'admin',
+        'PASSWORD': 'root',
         'HOST': '',
         'PORT': '',
     },
@@ -105,7 +113,7 @@ DATABASES = {
         'NAME': 'chatbot',
         'ENGINE': 'django.db.backends.mysql',
         'USER': 'root',
-        'PASSWORD': 'admin',
+        'PASSWORD': 'root',
         'HOST': '',
         'PORT': '',
     }

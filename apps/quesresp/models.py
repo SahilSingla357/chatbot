@@ -58,7 +58,7 @@ class Response(AdminAction, models.Model):
     @property
     def response_image_url(self):
         if self.response_image.name:
-            return settings.SITE_DOMAIN+self.response_image.url[1:]
+            return self.response_image.url
         return None
 
     def __str__(self):

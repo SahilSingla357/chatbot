@@ -64,7 +64,7 @@ class Application(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         if self.self_save == False:
-            js_script = generate_script(self.pk, settings.SITE_DOMAIN+self.chatbot_icon.url[1:], 
+            js_script = generate_script(self.pk, self.chatbot_icon.url, 
                 self.chatbot_title, self.greeting_message, self.end_message)
             v_name = self.vendor.name
             v_name = v_name.replace(' ','_')

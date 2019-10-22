@@ -4,7 +4,21 @@ var HTMLTEXT = 'HTML_CODE';
 var CSSTEXT = 'CSS_CODE';
 
 var response_html = '<li id="feedback-response-list" class="feedback-response-list" style="display: none"><button id="submit-button" name="submit-button" onclick="submitFunction()">Submit</button></li>';
-var siteDomain = "SITE_DOMAIN";
+var desktopSiteDomain = "DESKTOP_SITE_DOMAIN";
+var mobileSiteDomain = "MOBILE_SITE_DOMAIN";
+var siteDomain;
+if( navigator.userAgent.match(/Android/i)
+ || navigator.userAgent.match(/webOS/i)
+ || navigator.userAgent.match(/iPhone/i)
+ || navigator.userAgent.match(/iPad/i)
+ || navigator.userAgent.match(/iPod/i)
+ || navigator.userAgent.match(/BlackBerry/i)
+ || navigator.userAgent.match(/Windows Phone/i)
+ || window.isMobile){
+    siteDomain = mobileSiteDomain;
+}else{
+    siteDomain = desktopSiteDomain;
+}
 
 //adding chat-bot div
 var chatBotDiv = document.createElement("div");

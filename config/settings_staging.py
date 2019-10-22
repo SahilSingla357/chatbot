@@ -29,7 +29,8 @@ DATABASES = {
 
 IS_GCP = True
 
-SITE_DOMAIN = 'https://learning1.shine.com/chatbot/'
+DESKTOP_SITE_DOMAIN = 'https://learning1.shine.com/chatbot/'
+MOBILE_SITE_DOMAIN = 'https://mlearning1.shine.com/chatbot/'
 
 IS_GCP = True
 

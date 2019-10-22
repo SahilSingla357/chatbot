@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'apps.core',
     'apps.application',
     'rest_framework',
-    'compressor',
+    # 'compressor',
 
 ]
 
@@ -79,11 +79,11 @@ TEMPLATES = [
     },
 ]
 
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
-)
+# STATICFILES_FINDERS = (
+#     'django.contrib.staticfiles.finders.FileSystemFinder',
+#     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+#     'compressor.finders.CompressorFinder',
+# )
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
@@ -233,7 +233,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = 'media/static/'
+STATIC_URL = '/static/'
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = ('*',)
@@ -242,7 +242,7 @@ CORS_ORIGIN_WHITELIST = ('*',)
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
-STATIC_ROOT = os.path.join(MEDIA_ROOT, 'static')
+# STATIC_ROOT = os.path.join(MEDIA_ROOT, 'static')
 
 MEDIA_URL = "/media/"
 

@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'apps.core',
     'apps.application',
     'rest_framework',
+    # 'compressor',
+
 ]
 
 MIDDLEWARE = [
@@ -76,6 +78,11 @@ TEMPLATES = [
         },
     },
 ]
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
@@ -230,7 +237,12 @@ STATIC_URL = '/static/'
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = ('*',)
 
+
+
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
+# STATIC_ROOT = os.path.join(MEDIA_ROOT, 'static')
+
 MEDIA_URL = "/media/"
 
 SITE_DOMAIN = 'http://localhost:8000/'

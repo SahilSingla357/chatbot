@@ -29,8 +29,7 @@ class GCPStaticStorage(GoogleCloudStorageMixin):
 
     def __init__(self, **settings):
         super(GCPStaticStorage, self).__init__(**settings)
-        # self.local_storage = get_storage_class(
-        #     "compressor.storage.CompressorFileStorage")()
+        self.local_storage = get_storage_class()()
 
     def url(self, name):
         return settings.STATIC_URL + name

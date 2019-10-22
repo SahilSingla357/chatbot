@@ -67,13 +67,18 @@ class Application(models.Model):
             js_script = generate_script(self.pk, settings.SITE_DOMAIN+self.chatbot_icon.url[1:], 
                 self.chatbot_title, self.greeting_message, self.end_message)
             v_name = self.vendor.name
+            v_name = v_name.replace(' ','_')
+            v_name = v_name.lower()
             filename = v_name+'_'+self.application_name+'.js'
-            f=open("filename","wb+")
+            filename = filename.replace(' ','_')
+            filename = filename.lower()
+            f=open(filename,"wb+")
             f.write(str.encode(js_script))
             # js_script = UploadedFile(js_script)
-            if IS_GCP:
+            if settings.IS_GCP:
                 GCPMediaStorage().save('chatbot/' + filename, f);
             f.close();
+
             self.script = js_script
             self.self_save = True
             super().save(*args, **kwargs)

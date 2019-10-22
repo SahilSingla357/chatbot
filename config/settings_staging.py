@@ -31,6 +31,9 @@ IS_GCP = True
 
 SITE_DOMAIN = 'https://learning1.shine.com/chatbot/'
 
+IS_GCP = True
+
+
 ###### STORAGE SETTINGS #############
 DEFAULT_FILE_STORAGE = 'apps.core.library.gcloud.custom_cloud_storage.GCPMediaStorage'
 GS_BUCKET_NAME = 'learning-media-staging-189607'
@@ -40,7 +43,7 @@ GCP_PRIVATE_MEDIA_BUCKET = 'learning--misc-staging-189607'
 GCP_RESUME_BUILDER_BUCKET = 'learning--misc-staging-189607'
 CRM_PRIVATE_MEDIA_BUCKET = 'learningcrm-misc-staging-189607'
 
-COMPRESS_STORAGE = STATICFILES_STORAGE = 'apps.core.library.gcloud.custom_cloud_storage.GCPStaticStorage'
+STATICFILES_STORAGE = 'apps.core.library.gcloud.custom_cloud_storage.GCPStaticStorage'
 GS_PROJECT_ID = 'shine-staging-189607'
 GCP_STATIC_BUCKET = 'learning-static-staging-189607'
 

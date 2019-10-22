@@ -32,7 +32,6 @@ IS_GCP = True
 DESKTOP_SITE_DOMAIN = 'https://learning1.shine.com/chatbot/'
 MOBILE_SITE_DOMAIN = 'https://mlearning1.shine.com/chatbot/'
 
-IS_GCP = True
 
 
 ###### STORAGE SETTINGS #############

@@ -143,8 +143,8 @@ GCP_INVOICE_BUCKET = SECRETS['gcpInvoiceBucket']
 GCP_MEDIA_LOCATION = SECRETS['gcpMediaLocation'] 
 GCP_STATIC_LOCATION = SECRETS['gcpStaticLocation'] 
 
-
-
+DESKTOP_SITE_DOMAIN = SECRETS['desktopSiteDomain']
+MOBILE_SITE_DOMAIN = SECRETS['mobileSiteDomain'] 
 
 
 

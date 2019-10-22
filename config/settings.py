@@ -16,7 +16,7 @@ import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+PROJECT_DIR = os.path.dirname(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -26,7 +26,7 @@ SECRET_KEY = 'jq#7$-#59#)4*st2^f&570^mw5ex98p18nw@p630mw@^bd!z)1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+IS_GCP = False
 ALLOWED_HOSTS = ['*']
 
 
@@ -78,6 +78,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = PROJECT_DIR + '/chatbot/config/code-learning-key.json'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -170,6 +171,13 @@ LOGGING = {
         },
     },
 }
+
+# ######## STORAGE SETTINGS #############
+# GS_BUCKET_NAME = 'learning-media-staging-189607'
+# GCP_PRIVATE_MEDIA_BUCKET = 'learning--misc-staging-189607'
+# GCP_STATIC_BUCKET = 'learning-static-staging-189607'
+# GCP_INVOICE_BUCKET = 'learning-invoices-staging-189607'
+# GCP_RESUME_BUILDER_BUCKET = 'learning--misc-staging-189607'
 
 # ###### LOGGING SETTINGS #############
 # SYSLOG_ADDRESS = '/dev/log'

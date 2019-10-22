@@ -1,7 +1,7 @@
 from django.db import models
 from apps.vendor.models import Vendor
 from config import settings
-from core.library.gcloud.custom_cloud_storage import GCPMediaStorage
+from apps.core.library.gcloud.custom_cloud_storage import GCPMediaStorage
 
 
 from jsmin import jsmin

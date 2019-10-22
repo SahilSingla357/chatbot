@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "shine-staging-189607",
+  "private_key_id": "67cb78e9f59962debe48228068e40d15279388d3",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQE$
+  "client_email": "code-learning@shine-staging-189607.iam.gserviceaccount.$
+  "client_id": "100966403629032615784",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/cer$
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x5$
+}

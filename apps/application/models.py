@@ -68,7 +68,7 @@ class Application(models.Model):
                 self.chatbot_title, self.greeting_message, self.end_message)
             v_name = self.vendor.name
             filename = v_name+'_'+self.application_name + '.js'
-            file.open(filename,'wb')
+            file = open(filename,'wb+');
             file.write(str.encode(js_script))
             if settings.IS_GCP:
                 GCPMediaStorage().save('chatbot/' + filename, file)

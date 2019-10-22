@@ -12,173 +12,66 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import sys
+import json
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_DIR = os.path.dirname(BASE_DIR)
 
+
+
+try:
+    with open(os.path.join(BASE_DIR, 'config', 'secrets.json'), 'r') as secrets_file:
+        SECRETS = json.load(secrets_file)
+except IOError:
+    SECRETS = {}
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
+
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'jq#7$-#59#)4*st2^f&570^mw5ex98p18nw@p630mw@^bd!z)1'
+SECRET_KEY =  SECRETS['secretKey']
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-IS_GCP = True
-ALLOWED_HOSTS = ['*']
+DEBUG = SECRETS['debug']
+IS_GCP = SECRETS['isGCP']
+ALLOWED_HOSTS = SECRETS['allowedHosts']
 
 
 # Application definition
 
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'corsheaders',
-    'apps.quesresp',
-    'apps.vendor',
-    'apps.user',
-    'apps.core',
-    'apps.application',
-    'rest_framework',
-    # 'compressor',
+INSTALLED_APPS = SECRETS['installedApps']
 
-]
+MIDDLEWARE = SECRETS['middleware']
 
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-]
+ROOT_URLCONF = SECRETS['rootUrlConf']
 
-ROOT_URLCONF = 'config.chatbot_urls'
+TEMPLATES = SECRETS['templates']
 
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
-
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-)
-
-WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = SECRETS['wsgiApplication']
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = PROJECT_DIR + '/chatbot/config/code-learning-key.json'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'chatbot',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '',
-        'PORT': '',
-    },
-    'master': {
-        'NAME': 'chatbot',
-        'ENGINE': 'django.db.backends.mysql',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '',
-        'PORT': '',
-    },
-    'slave': {
-        'NAME': 'chatbot',
-        'ENGINE': 'django.db.backends.mysql',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '',
-        'PORT': '',
-    }
-}
+DATABASES = SECRETS['databases']
+
+
 
 # UPDATE mysql.user SET Password = PASSWORD('root') WHERE User = 'root'
 
 
 ######## LOGGING CONFIG ############################
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse',
-        },
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
-        },
-    },
-    'formatters': {
-        'verbose': {
-            'format': 'chatbot_%(name)s: %(levelname)s %(asctime)s %(pathname)s %(lineno)s %(message)s'
-        },
-        'simple': {
-            'format': '[%(asctime)s] %(levelname)s %(message)s',
-            'datefmt': '%d/%b/%Y %H:%M:%S'
-        },
-    },
-    'handlers': {
-        'mail_admins': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
-        },
-        'console': {
-            'level': 'DEBUG',
-            'filters': ['require_debug_true'],
-            'class': 'logging.handlers.SysLogHandler',
-            'facility': 'local4',
-            'formatter': 'simple'
-        },
-        'syslog': {
-            'level': 'DEBUG',
-            'class': 'logging.handlers.SysLogHandler',
-            # 'facility': 'local4',
-            'formatter': 'verbose',
-            #'filename': os.path.join(BASE_DIR, 'logger', 'info.log'),
+LOGGING = SECRETS['logging']
 
-        },
-    },
-    'loggers': {
-        # root logger
-        'info_log': {
-            'handlers': ['syslog'],
-            'level': 'INFO',
-            'propagate': True,
-        },
-        'error_log': {
-            'handlers': ['syslog'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
-    },
-}
+
 
 # ######## STORAGE SETTINGS #############
 # GS_BUCKET_NAME = 'learning-media-staging-189607'
@@ -198,53 +91,75 @@ LOGGING = {
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
+AUTH_PASSWORD_VALIDATORS = SECRETS['authPasswordValidators']
 
-AUTH_USER_MODEL = 'user.User'
+AUTH_USER_MODEL = SECRETS['authUserModel']
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE =SECRETS['languageCode'] 
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = SECRETS['timeZone']
 
-USE_I18N = True
+USE_I18N =SECRETS['useI18n']
 
-USE_L10N = True
+USE_L10N = SECRETS['useL10N']
 
-USE_TZ = True
+USE_TZ =SECRETS['useTz']
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = SECRETS['staticUrl']
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = SECRETS['corsOriginAllowAll']
+
 CORS_ORIGIN_WHITELIST = ('*',)
-
-
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
-# STATIC_ROOT = os.path.join(MEDIA_ROOT, 'static')
+MEDIA_URL =SECRETS['mediaUrl']
 
-MEDIA_URL = "/media/"
+SITE_DOMAIN = SECRETS['siteDomain']
 
-SITE_DOMAIN = 'http://localhost:8000/'
+DEFAULT_FILE_STORAGE = SECRETS['defaultFileStorage'] 
+
+GS_BUCKET_NAME = SECRETS['gsBucketName'] 
+
+PRIVATE_MEDIA_FILE_STORAGE = SECRETS['privateMediaFileStorage']
+GCP_PRIVATE_MEDIA_BUCKET = SECRETS['gcpPrivateMediaBucket'] 
+GCP_RESUME_BUILDER_BUCKET = SECRETS['gcpResumeBuilderBucket']
+CRM_PRIVATE_MEDIA_BUCKET = SECRETS['crmPrivateMediaBucket'] 
+STATICFILES_STORAGE = SECRETS['staticFilesStorage']
+GS_PROJECT_ID = SECRETS['gsProjectId']
+GCP_STATIC_BUCKET = SECRETS['gcpStaticBucket'] 
+
+INVOICE_FILE_STORAGE = SECRETS['invoiceFileStorage']
+GCP_INVOICE_BUCKET = SECRETS['gcpInvoiceBucket'] 
+
+GCP_MEDIA_LOCATION = SECRETS['gcpMediaLocation'] 
+GCP_STATIC_LOCATION = SECRETS['gcpStaticLocation'] 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

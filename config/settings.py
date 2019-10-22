@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'apps.vendor',
     'apps.user',
     'apps.application',
-    'apps.core',
     'rest_framework',
 ]
 

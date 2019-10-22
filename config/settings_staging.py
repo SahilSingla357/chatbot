@@ -5,7 +5,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'chatbot',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': 'admin',
         'HOST': '',
         'PORT': '',
     },
@@ -13,7 +13,7 @@ DATABASES = {
         'NAME': 'chatbot',
         'ENGINE': 'django.db.backends.mysql',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': 'admin',
         'HOST': '',
         'PORT': '',
     },
@@ -21,13 +21,16 @@ DATABASES = {
         'NAME': 'chatbot',
         'ENGINE': 'django.db.backends.mysql',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': 'admin',
         'HOST': '',
         'PORT': '',
     }
 }
 
 SITE_DOMAIN = 'https://learning1.shine.com/chatbot/'
+
+IS_GCP = True
+
 
 ###### STORAGE SETTINGS #############
 DEFAULT_FILE_STORAGE = 'apps.core.library.gcloud.custom_cloud_storage.GCPMediaStorage'

@@ -89,7 +89,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'chatbot',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': 'admin',
         'HOST': '',
         'PORT': '',
     },
@@ -97,7 +97,7 @@ DATABASES = {
         'NAME': 'chatbot',
         'ENGINE': 'django.db.backends.mysql',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': 'admin',
         'HOST': '',
         'PORT': '',
     },
@@ -105,7 +105,7 @@ DATABASES = {
         'NAME': 'chatbot',
         'ENGINE': 'django.db.backends.mysql',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': 'admin',
         'HOST': '',
         'PORT': '',
     }
@@ -225,13 +225,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = ('*',)
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
-MEDIA_URL = "/media/"
+# MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+# MEDIA_URL = "/media/"
 
 SITE_DOMAIN = 'http://localhost:8000/'
 

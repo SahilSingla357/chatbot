@@ -72,7 +72,69 @@ DATABASES = SECRETS['databases']
 
 ######## LOGGING CONFIG ############################
 
-LOGGING = SECRETS['logging']
+
+
+LOGGING = {
+		"version": 1,
+		"disable_existing_loggers": False,
+		"filters": {
+			"require_debug_false": {
+				"()": "django.utils.log.RequireDebugFalse"
+			},
+			"require_debug_true": {
+				"()": "django.utils.log.RequireDebugTrue"
+			}
+		},
+		"formatters": {
+			"verbose": {
+				"format": "chatbot_%(name)s: %(levelname)s %(asctime)s %(pathname)s %(lineno)s %(message)s"
+			},
+			"simple": {
+				"format": "[%(asctime)s] %(levelname)s %(message)s",
+				"datefmt": "%d/%b/%Y %H:%M:%S"
+			}
+		},
+		"handlers": {
+			"mail_admins": {
+				"level": "ERROR",
+				"filters": [
+					"require_debug_false"
+				],
+				"class": "django.utils.log.AdminEmailHandler"
+			},
+			"console": {
+				"level": "DEBUG",
+				"filters": [
+					"require_debug_true"
+				],
+				"class": "logging.handlers.SysLogHandler",
+				"facility": "local4",
+				"formatter": "simple"
+			},
+			"syslog": {
+				"level": "DEBUG",
+				"class": "logging.FileHandler",
+				"formatter": "verbose",
+                "filename": os.path.join(BASE_DIR, 'logger', 'info.log'),
+			}
+		},
+		"loggers": {
+			"info_log": {
+				"handlers": [
+					"syslog"
+				],
+				"level": "INFO",
+				"propagate": True
+			},
+			"error_log": {
+				"handlers": [
+					"syslog"
+				],
+				"level": "ERROR",
+				"propagate": True
+			}
+		}
+	}
 
 
 
@@ -131,6 +193,7 @@ SITE_DOMAIN = SECRETS['siteDomain']
 DEFAULT_FILE_STORAGE = SECRETS['defaultFileStorage'] 
 
 GS_BUCKET_NAME = SECRETS['gsBucketName'] 
+
 
 
 PRIVATE_MEDIA_FILE_STORAGE = SECRETS['privateMediaFileStorage']

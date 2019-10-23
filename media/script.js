@@ -128,12 +128,12 @@ function responseImage(resImageURL, resURL){
 
     var image_element = document.createElement("img");
     image_element.setAttribute("src",resImageURL);
-    image_element.setAttribute("target","_blank");
     image_element.setAttribute("alt","Link to product");
     image_element.setAttribute("style","width:100%;")
 
     if(resURL != "null"){
     image_url = document.createElement("a");
+    image_url.setAttribute("target","_blank");
     image_url.setAttribute("href",resURL);
     image_url.appendChild(image_element);
     responseComment.appendChild(image_url);}
@@ -365,13 +365,11 @@ function submitFunction() {
             if (message != "") {
                 message += ", ";
             }
+            if(respIds != ""){
+                respIds += `, `
+            }
             message += feedbackResponse[i].value;
-            if (i !== feedbackResponse.length - 1) {
-                respIds += `${feedbackResponse[i].dataset.responseId}, `;
-            }
-            else {
-                respIds += `${feedbackResponse[i].dataset.responseId}`;
-            }
+            respIds += `${feedbackResponse[i].dataset.responseId}`;
         }
     }
     if (message != "") {

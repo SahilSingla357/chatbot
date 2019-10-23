@@ -1,5 +1,6 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from shared.constants import stringToBool
+from django.http import HttpResponse
 
 from apps.application.models import Application
 from ..models import Question, Response, QuesRespRelation
@@ -38,11 +39,14 @@ class QuestionDetail(RetrieveAPIView):
     def get(self, request, *args, **kwargs):
         system_ip = self.visitor_ip_address(request)
         application_id = self.kwargs.get('application_id', '')
+        pk = self.kwargs.get('pk')
         vendor_id = Application.objects.get(id=application_id).vendor_id
         response_id = request.GET.get('resp','')
         prev_question_id = request.GET.get('lques','')
         if response_id and prev_question_id: 
             logging.getLogger('info_log').info('System Ip - {}; Vendor Id - {}; Application Id - {};Response Id\'s - {}; Prev Question Id - {}'.format(system_ip, vendor_id,application_id,response_id, prev_question_id))
+        if pk == '0':
+            return HttpResponse('')
         return super(QuestionDetail,self).get(request,*args, **kwargs);
 
 

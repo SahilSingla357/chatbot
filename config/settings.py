@@ -43,6 +43,9 @@ IS_GCP = SECRETS['isGCP']
 ALLOWED_HOSTS = SECRETS['allowedHosts']
 
 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static_core')]
+
+
 # Application definition
 
 INSTALLED_APPS = SECRETS['installedApps']
@@ -147,7 +150,7 @@ GCP_STATIC_LOCATION = SECRETS['gcpStaticLocation']
 DESKTOP_SITE_DOMAIN = SECRETS['desktopSiteDomain']
 MOBILE_SITE_DOMAIN = SECRETS['mobileSiteDomain'] 
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static_core')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static_core')
 
 
 

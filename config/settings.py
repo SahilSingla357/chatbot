@@ -129,6 +129,7 @@ DEFAULT_FILE_STORAGE = SECRETS['defaultFileStorage']
 
 GS_BUCKET_NAME = SECRETS['gsBucketName'] 
 
+
 PRIVATE_MEDIA_FILE_STORAGE = SECRETS['privateMediaFileStorage']
 GCP_PRIVATE_MEDIA_BUCKET = SECRETS['gcpPrivateMediaBucket'] 
 GCP_RESUME_BUILDER_BUCKET = SECRETS['gcpResumeBuilderBucket']
@@ -145,6 +146,8 @@ GCP_STATIC_LOCATION = SECRETS['gcpStaticLocation']
 
 DESKTOP_SITE_DOMAIN = SECRETS['desktopSiteDomain']
 MOBILE_SITE_DOMAIN = SECRETS['mobileSiteDomain'] 
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_core')
 
 
 

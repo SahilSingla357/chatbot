@@ -7,6 +7,7 @@ var response_html = '<li id="feedback-response-list" class="feedback-response-li
 var desktopSiteDomain = "DESKTOP_SITE_DOMAIN";
 var mobileSiteDomain = "MOBILE_SITE_DOMAIN";
 var siteDomain;
+
 if( navigator.userAgent.match(/Android/i)
  || navigator.userAgent.match(/webOS/i)
  || navigator.userAgent.match(/iPhone/i)
@@ -14,7 +15,7 @@ if( navigator.userAgent.match(/Android/i)
  || navigator.userAgent.match(/iPod/i)
  || navigator.userAgent.match(/BlackBerry/i)
  || navigator.userAgent.match(/Windows Phone/i)
- || window.isMobile){
+ ){
     siteDomain = mobileSiteDomain;
 }else{
     siteDomain = desktopSiteDomain;

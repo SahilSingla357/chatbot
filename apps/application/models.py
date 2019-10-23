@@ -12,7 +12,7 @@ import os
 
 def generate_script(pk, logo_path, title, greeting_message, end_message):
 
-    sprite_path = settings.MEDIA_ROOT+'/sprite.png' 
+    sprite_path = settings.MEDIA_URL+'sprite.png' 
 
     path_to_js = settings.MEDIA_ROOT + "/script.js"
     path_to_html = settings.MEDIA_ROOT + "/basic.html"
@@ -59,7 +59,7 @@ class Application(models.Model):
     end_url = models.URLField(max_length=300, help_text="url to send request to the vendor", blank=True, null=True)
     greeting_message = models.TextField(blank=True, null=True)
     end_message = models.TextField(blank=True, null=True)
-    script = models.TextField(blank=True)
+    script_link = models.URLField(help_text="link to the chatbot js scirpt", blank=True, null=True)
     is_active = models.BooleanField(
         default=False, help_text='Designates whether a vendor is active or not')
 
@@ -83,7 +83,7 @@ class Application(models.Model):
                 GCPMediaStorage().save('chatbot/' + filename, f);
             f.close();
 
-            self.script = js_script
+            self.script_link = settings.MEDIA_URL + 'chatbot/'+filename
             self.self_save = True
             super().save(*args, **kwargs)
 

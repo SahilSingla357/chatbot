@@ -390,4 +390,12 @@ function submitFunction() {
 window.addEventListener("unload", function () {
     saveChat();
 });
-
+window.addEventListener("load", function () {
+    window.setTimeout(popChat, 120000);
+});
+function popChat() {
+    if (document.getElementById("myForm").style.display == "block") {
+        return;
+    }
+    openChat();
+}

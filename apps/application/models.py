@@ -12,11 +12,11 @@ import os
 
 def generate_script(pk, logo_path, title, greeting_message, end_message):
 
-    sprite_path = settings.MEDIA_URL+'sprite.png' 
+    sprite_path = settings.MEDIA_ROOT+'/sprite.png' 
 
-    path_to_js = settings.MEDIA_URL + "script.js"
-    path_to_html = settings.MEDIA_URL + "basic.html"
-    path_to_css = settings.MEDIA_URL + "style.css"
+    path_to_js = settings.MEDIA_ROOT + "/script.js"
+    path_to_html = settings.MEDIA_ROOT + "/basic.html"
+    path_to_css = settings.MEDIA_ROOT + "/style.css"
 
     file_js = open(path_to_js, "r")
     file_html = open(path_to_html, "r")

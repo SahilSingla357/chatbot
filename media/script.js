@@ -67,7 +67,7 @@ function responseOptions(res, category) {
 
     if(category == 2 || category == 3){
         document.getElementById("feedback-response-list").style.display = "block";
-
+        document.getElementById("submit-button").disabled = true;
         var divElement = document.createElement("div");
         divElement.setAttribute("class", "input-body");
         var feedbackResponse = document.createElement("input");
@@ -347,7 +347,6 @@ function saveChat() {
 
 function refresh() {
     chatBotDiv.innerHTML = HTMLTEXT;
-    document.getElementById("submit-button").disabled = true;
     localStorage.removeItem("chatHistory");
     localStorage.removeItem("last_Question");
     openChat();

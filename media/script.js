@@ -77,6 +77,7 @@ function responseOptions(res, category) {
             feedbackResponse.setAttribute("type", "radio");
             feedbackResponse.setAttribute("name", "feedback");}
         feedbackResponse.setAttribute("class", "feedback-response");
+        feedbackResponse.setAttribute("onchange","responseSelect()")
         feedbackResponse.setAttribute("value", res.response_text);
         feedbackResponse.setAttribute("id", res.response_text);
         feedbackResponse.setAttribute("data-response-id", responseId);
@@ -345,12 +346,23 @@ function saveChat() {
 }
 
 function refresh() {
-    closeChat();
     chatBotDiv.innerHTML = HTMLTEXT;
-
+    document.getElementById("submit-button").disabled = true;
     localStorage.removeItem("chatHistory");
     localStorage.removeItem("last_Question");
+    openChat();
 
+}
+
+function responseSelect(){
+    var feedbackResponse = document.getElementsByClassName("feedback-response");
+    for (var i = 0; i < feedbackResponse.length; i = i + 1){
+        if(feedbackResponse[i].checked){
+            document.getElementById("submit-button").disabled = false;
+            break;
+        }
+        document.getElementById("submit-button").disabled = true;
+    }
 }
 
 function submitFunction() {

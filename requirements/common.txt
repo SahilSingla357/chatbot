@@ -5,7 +5,7 @@ Django==1.11.8
 django-compressor==2.1
 django-cors-headers==2.1.0
 django-filter==1.0.4
-djangorestframework==3.8.2
+djangorestframework==3.9.1
 htmlmin==0.1.12
 ipdb==0.12.2
 ipython==7.7.0

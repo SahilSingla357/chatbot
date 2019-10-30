@@ -111,24 +111,51 @@ LOGGING = {
 				"facility": "local4",
 				"formatter": "simple"
 			},
-			"syslog": {
+			"app_syslog": {
 				"level": "DEBUG",
 				"class": "logging.FileHandler",
 				"formatter": "verbose",
-                "filename": os.path.join(BASE_DIR, 'logger', 'info.log'),
+                "filename": os.path.join(BASE_DIR+'/apps/application', 'logger', 'info.log'),
+			},
+			"quesresp_syslog": {
+				"level": "DEBUG",
+				"class": "logging.FileHandler",
+				"formatter": "verbose",
+                "filename": os.path.join(BASE_DIR+'/apps/quesresp', 'logger', 'info.log'),
+			},
+			"vendor_syslog":{
+				"level": "DEBUG",
+				"class": "logging.FileHandler",
+				"formatter": "verbose",
+                "filename": os.path.join(BASE_DIR+'/apps/vendor', 'logger', 'info.log'),
 			}
+
 		},
 		"loggers": {
-			"info_log": {
+			"app_info_log": {
 				"handlers": [
-					"syslog"
+					"app_syslog"
+				],
+				"level": "INFO",
+				"propagate": True
+			},
+			"quesresp_info_log": {
+				"handlers": [
+					"quesresp_syslog"
+				],
+				"level": "INFO",
+				"propagate": True
+			},
+			"vendor_info_log": {
+				"handlers": [
+					"vendor_syslog"
 				],
 				"level": "INFO",
 				"propagate": True
 			},
 			"error_log": {
 				"handlers": [
-					"syslog"
+					"quesresp_syslog"
 				],
 				"level": "ERROR",
 				"propagate": True

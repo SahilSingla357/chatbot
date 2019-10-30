@@ -94,6 +94,7 @@ button:active {
   display: block;
   font-weight: 400;
   font-size: 1.5rem;
+  opacity: 0.5;
 }
 
 

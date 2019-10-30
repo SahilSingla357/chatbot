@@ -358,9 +358,11 @@ function responseSelect(){
     for (var i = 0; i < feedbackResponse.length; i = i + 1){
         if(feedbackResponse[i].checked){
             document.getElementById("submit-button").disabled = false;
+            document.getElementById("submit-button").style.opacity = 1;
             break;
         }
         document.getElementById("submit-button").disabled = true;
+        document.getElementById("submit-button").style.opacity = 0.5;
     }
 }
 

@@ -43,7 +43,7 @@ class QuestionDetail(RetrieveAPIView):
         response_id = request.GET.get('resp','')
         prev_question_id = request.GET.get('lques','')
         if response_id and prev_question_id: 
-            logging.getLogger('info_log').info('System Ip - {}; Vendor Id - {}; Application Id - {};Response Id\'s - {}; Prev Question Id - {}'.format(system_ip, vendor_id,application_id,response_id, prev_question_id))
+            logging.getLogger('quesresp_info_log').info('System Ip - {}; Vendor Id - {}; Application Id - {};Response Id\'s - {}; Prev Question Id - {}'.format(system_ip, vendor_id,application_id,response_id, prev_question_id))
         return super(QuestionDetail,self).get(request,*args, **kwargs);
 
 

@@ -411,3 +411,12 @@ function popChat() {
     }
     openChat();
 }
+function noScroll() {
+  window.scrollTo(0, 0);
+}
+function mouseOver(){
+    window.addEventListener('scroll', noScroll);
+}
+function mouseOut(){
+    window.removeEventListener('scroll', noScroll);
+}

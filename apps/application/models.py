@@ -23,8 +23,7 @@ def generate_script(pk, logo_path, title, greeting_message, end_message):
     file_css = open(path_to_css, "r")
 
     text_js = file_js.read()
-    text_js = text_js.replace("DESKTOP_SITE_DOMAIN",settings.DESKTOP_SITE_DOMAIN)
-    text_js = text_js.replace("MOBILE_SITE_DOMAIN",settings.MOBILE_SITE_DOMAIN)
+    text_js = text_js.replace("SITE_DOMAIN",settings.SITE_DOMAIN)
     text_js = text_js.replace("GREETING_MESSAGE",greeting_message)
     text_js = text_js.replace("END_MESSAGE",end_message) #fix it 
     text_html = file_html.read()

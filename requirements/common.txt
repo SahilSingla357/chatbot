@@ -1,7 +1,7 @@
 backcall==0.1.0
 cssmin==0.2.0
 decorator==4.4.0
-Django==1.11.8
+Django==1.11.29
 django-compressor==2.1
 django-cors-headers==2.1.0
 django-filter==1.0.4
